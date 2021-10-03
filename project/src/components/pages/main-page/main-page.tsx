@@ -17,32 +17,32 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
           <section className='locations container'>
             <ul className='locations__list tabs__list'>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#temp'>
                   <span>Paris</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#temp'>
                   <span>Cologne</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#temp'>
                   <span>Brussels</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active'>
+                <a className='locations__item-link tabs__item tabs__item--active' href='#temp'>
                   <span>Amsterdam</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#temp'>
                   <span>Hamburg</span>
                 </a>
               </li>
               <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#'>
+                <a className='locations__item-link tabs__item' href='#temp'>
                   <span>Dusseldorf</span>
                 </a>
               </li>
