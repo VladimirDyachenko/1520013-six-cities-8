@@ -80,7 +80,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {offers.map((offer) => <ApartmentCard key={offer.id}/>)}
+                {offers.map((offer) => <ApartmentCard key={offer.id} offer={offer}/>)}
               </div>
             </section>
             <div className='cities__right-section'>

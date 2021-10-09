@@ -32,8 +32,8 @@ export const offers: Array<Offer> = [
     maxAdults: 2,
     previewImage: 'img/apartment-03.jpg',
     price: 100,
-    rating: 3.4,
-    title: 'string',
+    rating: 4,
+    title: 'Navigating the capacitor won\'t do anything, we need to synthesize the digital SAS pixel!',
     type: OfferType.Apartment,
   },
   {
@@ -66,8 +66,8 @@ export const offers: Array<Offer> = [
     maxAdults: 2,
     previewImage: 'img/apartment-03.jpg',
     price: 100,
-    rating: 3.4,
-    title: 'string',
+    rating: 0,
+    title: 'Use the primary FTP monitor, then you can calculate the online panel!',
     type: OfferType.Hotel,
   },
   {
@@ -100,8 +100,8 @@ export const offers: Array<Offer> = [
     maxAdults: 2,
     previewImage: 'img/apartment-03.jpg',
     price: 100,
-    rating: 3.4,
-    title: 'string',
+    rating: 5,
+    title: 'The TCP transmitter is down, generate the haptic transmitter so we can back up the SDD interface!',
     type: OfferType.House,
   },
   {
@@ -134,8 +134,8 @@ export const offers: Array<Offer> = [
     maxAdults: 2,
     previewImage: 'img/apartment-03.jpg',
     price: 100,
-    rating: 3.4,
-    title: 'string',
+    rating: 2,
+    title: 'Try to hack the THX bandwidth, maybe it will back up the digital driver!',
     type: OfferType.Rom,
   },
 ];
