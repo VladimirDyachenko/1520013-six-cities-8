@@ -3,14 +3,15 @@ import { HumaneFriendlyOfferType } from '../../types/offer-type';
 
 type ApartmentCardProps = {
   offer: Offer;
+  onMouseEnter: (id: number) => void;
 }
 
-function ApartmentCard({offer}: ApartmentCardProps): JSX.Element {
-  const { isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
+function ApartmentCard({offer, onMouseEnter}: ApartmentCardProps): JSX.Element {
+  const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const favoriteButtonClassName = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
 
   return (
-    <article className='cities__place-card place-card'>
+    <article className='cities__place-card place-card' onMouseEnter={() => onMouseEnter(id)}>
       {isPremium ?
         <div className='place-card__mark'>
           <span>Premium</span>
