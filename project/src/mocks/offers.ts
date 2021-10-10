@@ -56,7 +56,7 @@ export const offers: Array<Offer> = [
     },
     id: 2,
     images: ['img/apartment-03.jpg', 'img/apartment-03.jpg', 'img/apartment-03.jpg'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     location: {
       latitude: 45.455,
@@ -112,7 +112,7 @@ export const offers: Array<Offer> = [
         longitude: 44.545,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description: 'Some not so long description',
     goods: ['Window', 'Washer', 'Chair'],
@@ -124,7 +124,7 @@ export const offers: Array<Offer> = [
     },
     id: 4,
     images: ['img/apartment-03.jpg', 'img/apartment-03.jpg', 'img/apartment-03.jpg'],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 45.455,
