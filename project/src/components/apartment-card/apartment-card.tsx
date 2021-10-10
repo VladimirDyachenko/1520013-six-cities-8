@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { AppRoute } from '../../utils/const';
 
 type ApartmentCardProps = {
   offer: Offer;
@@ -18,7 +20,7 @@ function ApartmentCard({offer, onMouseEnter}: ApartmentCardProps): JSX.Element {
         </div>
         : ''}
       <div className='cities__image-wrapper place-card__image-wrapper'>
-        <a href='#temp'>
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img
             className='place-card__image'
             src={previewImage}
@@ -26,7 +28,7 @@ function ApartmentCard({offer, onMouseEnter}: ApartmentCardProps): JSX.Element {
             height='200'
             alt='Place'
           />
-        </a>
+        </Link>
       </div>
       <div className='place-card__info'>
         <div className='place-card__price-wrapper'>
@@ -57,7 +59,7 @@ function ApartmentCard({offer, onMouseEnter}: ApartmentCardProps): JSX.Element {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <a href='#temp'>{title}</a>
+          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className='place-card__type'>{HumaneFriendlyOfferType[type]}</p>
       </div>

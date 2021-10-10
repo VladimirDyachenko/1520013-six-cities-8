@@ -20,7 +20,7 @@ function App({offers}: AppPageProps): JSX.Element {
         <Route path={AppRoute.Main} exact>
           <MainPage offers={offers}/>
         </Route>
-        <Route path={AppRoute.Room} exact>
+        <Route path={`${AppRoute.Room}/:id`} exact>
           <PropertyPage/>
         </Route>
         <NoAuthOnlyRoute

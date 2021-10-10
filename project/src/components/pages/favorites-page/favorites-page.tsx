@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../../types/offer';
+import { AppRoute } from '../../../utils/const';
 import FavoritesList from '../../favorites-list/favorites-list';
 import Header from '../../header/header';
 
@@ -19,9 +21,9 @@ function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
         </div>
       </main>
       <footer className='footer container'>
-        <a className='footer__logo-link' href='main.html'>
+        <Link to={AppRoute.Main} className='footer__logo-link'>
           <img className='footer__logo' src='img/logo.svg' alt='6 cities logo' width='64' height='33'/>
-        </a>
+        </Link>
       </footer>
     </div>
   );

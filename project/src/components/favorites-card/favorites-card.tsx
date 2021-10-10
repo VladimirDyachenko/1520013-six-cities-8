@@ -1,17 +1,19 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { AppRoute } from '../../utils/const';
 
 type FavoritesCardProps = {
   offer: Offer
 };
 
 function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
-  const { previewImage, price, rating, title, type } = offer;
+  const { id, previewImage, price, rating, title, type } = offer;
 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#temp">
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -19,7 +21,7 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
             height="110"
             alt="Place"
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -44,7 +46,7 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#temp">{title}</a>
+          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{HumaneFriendlyOfferType[type]}</p>
       </div>
