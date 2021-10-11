@@ -1,13 +1,12 @@
-import ApartmentCard from '../../apartment-card/apartment-card';
+import { Offer } from '../../../types/offer';
+import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
 
 type MainPageProps = {
-  offersCount: number;
+  offers: Offer[];
 }
 
-
-function MainPage({offersCount}: MainPageProps): JSX.Element {
-  const offers = new Array(offersCount).fill(undefined).map((_, index) => <ApartmentCard key={index.toString()}/>);
+function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <div className='page page--gray page--main'>
       <Header/>
@@ -67,22 +66,20 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
                     className='places__option places__option--active'
                     tabIndex={0}
                   >
-                      Popular
+                    Popular
                   </li>
                   <li className='places__option' tabIndex={0}>
-                      Price: low to high
+                    Price: low to high
                   </li>
                   <li className='places__option' tabIndex={0}>
-                      Price: high to low
+                    Price: high to low
                   </li>
                   <li className='places__option' tabIndex={0}>
-                      Top rated first
+                    Top rated first
                   </li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
-                {offers}
-              </div>
+              <ApartmentCardsList offers={offers}/>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'></section>

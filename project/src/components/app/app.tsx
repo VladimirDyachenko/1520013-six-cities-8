@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Offer } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../utils/const';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
@@ -9,17 +10,17 @@ import NoAuthOnlyRoute from '../route-components/no-auth-only-route/no-auth-only
 import PrivateRoute from '../route-components/private-route/private-route';
 
 type AppPageProps = {
-  offersCount: number;
+  offers: Offer[];
 };
 
-function App({offersCount}: AppPageProps): JSX.Element {
+function App({offers}: AppPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage offersCount={offersCount}/>
+          <MainPage offers={offers}/>
         </Route>
-        <Route path={AppRoute.Room} exact>
+        <Route path={`${AppRoute.Room}/:id`} exact>
           <PropertyPage/>
         </Route>
         <NoAuthOnlyRoute
@@ -32,8 +33,8 @@ function App({offersCount}: AppPageProps): JSX.Element {
         <PrivateRoute
           path={AppRoute.Favorites}
           exact
-          render={() => <FavoritesPage />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <FavoritesPage offers={offers}/>}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route path="">
