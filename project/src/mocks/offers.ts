@@ -6,8 +6,8 @@ export const offers: Array<Offer> = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 44.444,
-        longitude: 44.545,
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -25,8 +25,8 @@ export const offers: Array<Offer> = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 45.455,
-      longitude: 44.454,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 10,
     },
     maxAdults: 2,
@@ -40,8 +40,8 @@ export const offers: Array<Offer> = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 44.444,
-        longitude: 44.545,
+        latitude: 52.369553943508,
+        longitude: 52.369553943508,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -59,8 +59,8 @@ export const offers: Array<Offer> = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 45.455,
-      longitude: 44.454,
+      latitude: 52.369553943508,
+      longitude: 52.369553943508,
       zoom: 10,
     },
     maxAdults: 2,
@@ -74,8 +74,8 @@ export const offers: Array<Offer> = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 44.444,
-        longitude: 44.545,
+        latitude: 52.3909553943508,
+        longitude: 4.929309666406198,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -93,8 +93,8 @@ export const offers: Array<Offer> = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 45.455,
-      longitude: 44.454,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 10,
     },
     maxAdults: 2,
@@ -108,8 +108,8 @@ export const offers: Array<Offer> = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 44.444,
-        longitude: 44.545,
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
         zoom: 10,
       },
       name: 'Paris',
@@ -127,8 +127,8 @@ export const offers: Array<Offer> = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 45.455,
-      longitude: 44.454,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 10,
     },
     maxAdults: 2,
