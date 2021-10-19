@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { Offer } from '../../../types/offer';
 import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
+import Map from '../../map/map';
 
 type MainPageProps = {
   offers: Offer[];
 }
 
 function MainPage({offers}: MainPageProps): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState<number>();
+
   return (
     <div className='page page--gray page--main'>
       <Header/>
@@ -79,10 +83,20 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <ApartmentCardsList offers={offers}/>
+              <ApartmentCardsList offers={offers} setActiveOfferId={setActiveOfferId}/>
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <Map
+                activeOfferId={activeOfferId}
+                offers={offers}
+                city={
+                  {
+                    latitude: 52.3909553943508,
+                    longitude: 4.85309666406198,
+                    zoom: 10,
+                  }
+                }
+              />
             </div>
           </div>
         </div>
