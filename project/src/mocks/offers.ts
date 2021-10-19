@@ -60,7 +60,7 @@ export const offers: Array<Offer> = [
     isPremium: true,
     location: {
       latitude: 52.369553943508,
-      longitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 10,
     },
     maxAdults: 2,
