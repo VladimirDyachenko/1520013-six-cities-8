@@ -1,23 +1,24 @@
-import { useState } from 'react';
 import { Offer } from '../../types/offer';
 import ApartmentCard from '../apartment-card/apartment-card';
 
 type ApartmentCardsListProps = {
   offers: Offer[];
-}
+  setActiveOfferId: (id: number) => void;
+};
 
-function ApartmentCardsList({offers}: ApartmentCardsListProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeOffer, setActiveOffer] = useState<number>();
-
+function ApartmentCardsList({
+  offers,
+  setActiveOfferId,
+}: ApartmentCardsListProps): JSX.Element {
   return (
-    <div className='cities__places-list places__list tabs__content'>
+    <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
         <ApartmentCard
           key={offer.id}
           offer={offer}
-          onMouseEnter={(id: number) => setActiveOffer(id)}
-        />))}
+          onMouseEnter={(id: number) => setActiveOfferId(id)}
+        />
+      ))}
     </div>
   );
 }
