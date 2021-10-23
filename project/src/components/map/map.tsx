@@ -10,7 +10,8 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: GeoLocation;
   offers: Offer[];
-  activeOfferId: number | undefined;
+  activeOfferId?: number | undefined;
+  className?: string;
 };
 
 const defaultIcon = new Icon({
@@ -25,7 +26,7 @@ const activeIcon = new Icon({
   iconAnchor: selectedMapIcon.iconAnchor as PointExpression,
 });
 
-function Map({city, offers, activeOfferId}: MapProps): JSX.Element {
+function Map({city, offers, activeOfferId, className}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const [map, markerLayer] = useMap(mapRef, city);
@@ -52,7 +53,7 @@ function Map({city, offers, activeOfferId}: MapProps): JSX.Element {
   }, [map, offers, activeOfferId, markerLayer]);
 
   return (
-    <section className='cities__map map' ref={mapRef}></section>
+    <section className={`${className ? `${className}` : 'cities__map'} map`} ref={mapRef}></section>
   );
 }
 

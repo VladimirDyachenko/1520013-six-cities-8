@@ -6,20 +6,23 @@ import { AppRoute } from '../../utils/const';
 type ApartmentCardProps = {
   offer: Offer;
   onMouseEnter: (id: number) => void;
+  isNearByCard?: boolean;
 }
 
-function ApartmentCard({offer, onMouseEnter}: ApartmentCardProps): JSX.Element {
+function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps): JSX.Element {
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const favoriteButtonClassName = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
+  const articleClassName = isNearByCard ? 'near-places__card place-card' : 'cities__place-card place-card';
+  const imageWrapperClassName = isNearByCard ? 'near-places__image-wrapper place-card__image-wrapper' : 'cities__image-wrapper place-card__image-wrapper';
 
   return (
-    <article className='cities__place-card place-card' onMouseEnter={() => onMouseEnter(id)}>
+    <article className={articleClassName} onMouseEnter={() => onMouseEnter(id)}>
       {isPremium ?
         <div className='place-card__mark'>
           <span>Premium</span>
         </div>
         : ''}
-      <div className='cities__image-wrapper place-card__image-wrapper'>
+      <div className={imageWrapperClassName}>
         <Link to={`${AppRoute.Room}/${id}`}>
           <img
             className='place-card__image'
