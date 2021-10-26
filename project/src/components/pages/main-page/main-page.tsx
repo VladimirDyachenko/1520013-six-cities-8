@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch, useState, useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
@@ -30,8 +30,10 @@ const availableCities = Object.values(AvailableCity);
 function MainPage(props: ConnectedComponentProps): JSX.Element {
   const {offers, cityName, onSetCity} = props;
   const [activeOfferId, setActiveOfferId] = useState<number>();
-  //TODO! вынести фильтрацию за пределы компонента
-  const filteredOffers = offers.filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase());
+  const filteredOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase()),
+    [offers, cityName],
+  );
 
   return (
     <div className='page page--gray page--main'>
