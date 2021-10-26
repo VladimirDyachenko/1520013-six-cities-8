@@ -18,7 +18,7 @@ function App({offers}: AppPageProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage offers={offers}/>
+          <MainPage/>
         </Route>
         <Route path={`${AppRoute.Room}/:id`} exact>
           <PropertyPage/>

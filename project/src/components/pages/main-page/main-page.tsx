@@ -1,62 +1,53 @@
-import { useState } from 'react';
-import { Offer } from '../../../types/offer';
+import { Dispatch, useState } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
 import Map from '../../map/map';
+import LocationsTabs from '../../locations-tabs/locations-tabs';
+import { State } from '../../../types/store/state';
+import { Actions } from '../../../types/store/actions';
+import { setCity } from '../../../store/action';
+import { AvailableCity } from '../../../utils/const';
 
-type MainPageProps = {
-  offers: Offer[];
-}
+const mapStateToProps = ({cityName, offers}: State) => ({
+  cityName,
+  offers,
+});
 
-function MainPage({offers}: MainPageProps): JSX.Element {
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onSetCity(city: string) {
+    dispatch(setCity(city));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+const availableCities = Object.values(AvailableCity);
+
+function MainPage(props: ConnectedComponentProps): JSX.Element {
+  const {offers, cityName, onSetCity} = props;
   const [activeOfferId, setActiveOfferId] = useState<number>();
+  //TODO! вынести фильтрацию за пределы компонента
+  const filteredOffers = offers.filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase());
 
   return (
     <div className='page page--gray page--main'>
       <Header/>
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
-        <div className='tabs'>
-          <section className='locations container'>
-            <ul className='locations__list tabs__list'>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#temp'>
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#temp'>
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#temp'>
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item tabs__item--active' href='#temp'>
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#temp'>
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className='locations__item'>
-                <a className='locations__item-link tabs__item' href='#temp'>
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <LocationsTabs
+          locations={availableCities}
+          selectedLocation={cityName}
+          onSetLocation={onSetCity}
+        />
         <div className='cities'>
           <div className='cities__places-container container'>
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
-              <b className='places__found'>312 places to stay in Amsterdam</b>
+              <b className='places__found'>{filteredOffers.length} places to stay in {cityName}</b>
               <form className='places__sorting' action='#' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
                 <span className='places__sorting-type' tabIndex={0}>
@@ -83,12 +74,12 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <ApartmentCardsList offers={offers} setActiveOfferId={setActiveOfferId}/>
+              <ApartmentCardsList offers={filteredOffers} setActiveOfferId={setActiveOfferId}/>
             </section>
             <div className='cities__right-section'>
               <Map
                 activeOfferId={activeOfferId}
-                offers={offers}
+                offers={filteredOffers}
                 city={
                   {
                     latitude: 52.3909553943508,
@@ -105,4 +96,5 @@ function MainPage({offers}: MainPageProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export { MainPage };
+export default connector(MainPage);

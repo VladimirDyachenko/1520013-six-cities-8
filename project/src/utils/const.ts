@@ -23,4 +23,13 @@ export const selectedMapIcon = {
   iconAnchor: [13.5, 39],
 };
 
-export const INITIAL_CITY_NAME = 'Amsterdam';
+export const INITIAL_CITY_NAME = 'Paris';
+
+export enum AvailableCity {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
