@@ -1,3 +1,5 @@
+import { Offer, IOfferSortOption } from '../types/offer';
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -33,3 +35,22 @@ export enum AvailableCity {
   Hamburg = 'Hamburg',
   Dusseldorf = 'Dusseldorf',
 }
+
+export const offersSortOptions: IOfferSortOption[] = [
+  {
+    name: 'Popular',
+    sortFunction(a: Offer, b: Offer): number { return 0; },
+  },
+  {
+    name: 'Price: low to high',
+    sortFunction(a: Offer, b: Offer): number { return a.price - b.price; },
+  },
+  {
+    name: 'Price: high to low',
+    sortFunction(a: Offer, b: Offer): number { return b.price - a.price; },
+  },
+  {
+    name: 'Top rated first',
+    sortFunction(a: Offer, b: Offer): number { return b.rating - a.rating; },
+  },
+];

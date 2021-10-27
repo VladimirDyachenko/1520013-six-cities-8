@@ -4,10 +4,12 @@ import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list'
 import Header from '../../header/header';
 import Map from '../../map/map';
 import LocationsTabs from '../../locations-tabs/locations-tabs';
+import SortForm from '../../sort-form/sort-form';
 import { State } from '../../../types/store/state';
 import { Actions } from '../../../types/store/actions';
 import { setCity } from '../../../store/action';
-import { AvailableCity } from '../../../utils/const';
+import { AvailableCity, offersSortOptions } from '../../../utils/const';
+import { IOfferSortOption } from '../../../types/offer';
 
 const mapStateToProps = ({cityName, offers}: State) => ({
   cityName,
@@ -30,10 +32,17 @@ const availableCities = Object.values(AvailableCity);
 function MainPage(props: ConnectedComponentProps): JSX.Element {
   const {offers, cityName, onSetCity} = props;
   const [activeOfferId, setActiveOfferId] = useState<number>();
+  const [selectedSort, setSelectedSort] = useState(offersSortOptions[0]);
   const filteredOffers = useMemo(
-    () => offers.filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase()),
-    [offers, cityName],
+    () => offers
+      .filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase())
+      .sort(selectedSort.sortFunction),
+    [offers, cityName, selectedSort],
   );
+
+  const handleSortingChange = (sortOption: IOfferSortOption) => {
+    setSelectedSort(sortOption);
+  };
 
   return (
     <div className='page page--gray page--main'>
@@ -50,32 +59,11 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
               <b className='places__found'>{filteredOffers.length} places to stay in {cityName}</b>
-              <form className='places__sorting' action='#' method='get'>
-                <span className='places__sorting-caption'>Sort by</span>
-                <span className='places__sorting-type' tabIndex={0}>
-                    Popular
-                  <svg className='places__sorting-arrow' width='7' height='4'>
-                    <use xlinkHref='#icon-arrow-select'></use>
-                  </svg>
-                </span>
-                <ul className='places__options places__options--custom places__options--opened'>
-                  <li
-                    className='places__option places__option--active'
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <SortForm
+                sortOptions={offersSortOptions}
+                selectedOption={selectedSort}
+                handleChange={handleSortingChange}
+              />
               <ApartmentCardsList offers={filteredOffers} setActiveOfferId={setActiveOfferId}/>
             </section>
             <div className='cities__right-section'>
