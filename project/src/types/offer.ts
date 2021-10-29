@@ -23,3 +23,8 @@ export type Offer = {
   title: string;
   type: OfferType;
 }
+
+export interface IOfferSortOption {
+  name: string;
+  sortFunction: (a: Offer, b: Offer) => number;
+}
