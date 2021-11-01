@@ -5,6 +5,7 @@ import { INITIAL_CITY_NAME } from '../utils/const';
 const initialState: State = {
   cityName: INITIAL_CITY_NAME,
   offers: [],
+  isDataLoaded: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -14,7 +15,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.SetOffers:
       return {...state, offers: action.payload};
     case ActionType.LoadOffers:
-      return {...state, offers: action.payload.offers };
+      return {
+        ...state,
+        isDataLoaded: true,
+        offers: action.payload.offers,
+      };
     default:
       return state;
   }
