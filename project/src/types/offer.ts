@@ -4,10 +4,7 @@ import { OfferType } from './offer-type';
 
 export type Offer = {
   bedrooms: number;
-  city: {
-    location: GeoLocation;
-    name: string;
-  };
+  city: City;
   description: string;
   goods: string[];
   host: PublicAuthInfo;
@@ -22,6 +19,11 @@ export type Offer = {
   rating: number;
   title: string;
   type: OfferType;
+}
+
+export type City = {
+  location: GeoLocation;
+  name: string;
 }
 
 export interface IOfferSortOption {

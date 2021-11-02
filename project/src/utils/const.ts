@@ -54,3 +54,7 @@ export const offersSortOptions: IOfferSortOption[] = [
     sortFunction(a: Offer, b: Offer): number { return b.rating - a.rating; },
   },
 ];
+
+export enum APIRoute {
+  Hotels = '/hotels',
+}
