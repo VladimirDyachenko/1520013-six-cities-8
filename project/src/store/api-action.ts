@@ -18,6 +18,8 @@ export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const { data } = await api.get<AuthInfoRes | undefined>(APIRoute.Login);
     if (data) {
+      const adaptedData = APIAdapter.authInfoToClient(data);
+      dispatch(setUserData(adaptedData));
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     }
   };
