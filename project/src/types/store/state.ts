@@ -1,4 +1,5 @@
 import { AuthorizationStatus } from '../../utils/const';
+import { PrivateAuthInfo } from '../auth-info';
 import { Offer } from '../offer';
 
 export type State = {
@@ -6,4 +7,5 @@ export type State = {
   offers: Offer[];
   isDataLoaded: boolean;
   authorizationStatus: AuthorizationStatus;
+  userData?: PrivateAuthInfo;
 }

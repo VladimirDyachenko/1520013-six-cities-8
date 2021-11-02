@@ -1,3 +1,4 @@
+import { PrivateAuthInfo } from '../types/auth-info';
 import { Offer } from '../types/offer';
 import { ActionType } from '../types/store/actions';
 import { AuthorizationStatus } from '../utils/const';
@@ -22,4 +23,9 @@ export const loadOffers = (offers: Offer[]) => ({
 export const setAuthorizationStatus = (status: AuthorizationStatus) => ({
   type: ActionType.SetAuthorizationStatus,
   payload: status,
+} as const);
+
+export const setUserData = (data: PrivateAuthInfo) => ({
+  type: ActionType.SetUserData,
+  payload: data,
 } as const);
