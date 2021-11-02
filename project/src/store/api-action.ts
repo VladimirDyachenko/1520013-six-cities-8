@@ -4,7 +4,7 @@ import { APIRoute, AuthorizationStatus } from '../utils/const';
 import { AuthInfoRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
 import { UserRequest } from '../types/api-request';
-import { setToken } from '../services/token';
+import { dropToken, setToken } from '../services/token';
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -38,5 +38,6 @@ export const loginAction = ({ email, password }: UserRequest): ThunkActionResult
 export const logOutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.delete(APIRoute.LogOut);
+    dropToken();
     dispatch(logOut());
   };
