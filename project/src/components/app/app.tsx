@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 import { State } from '../../types/store/state';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import LoginPage from '../pages/login-page/login-page';
@@ -38,16 +38,12 @@ function App({isDataLoaded}: PropsFromRedux): JSX.Element {
           path={AppRoute.SignIn}
           exact
           render={() => <LoginPage/>}
-          authorizationStatus={AuthorizationStatus.NoAuth}
-        >
-        </NoAuthOnlyRoute>
+        />
         <PrivateRoute
           path={AppRoute.Favorites}
           exact
           render={() => <FavoritesPage offers={[]}/>}
-          authorizationStatus={AuthorizationStatus.Auth}
-        >
-        </PrivateRoute>
+        />
         <Route path="">
           <NotFoundPage/>
         </Route>
