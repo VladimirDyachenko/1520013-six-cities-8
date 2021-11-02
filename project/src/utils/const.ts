@@ -57,4 +57,5 @@ export const offersSortOptions: IOfferSortOption[] = [
 
 export enum APIRoute {
   Hotels = '/hotels',
+  Login = '/login',
 }

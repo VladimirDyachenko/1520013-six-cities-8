@@ -1,5 +1,6 @@
 import { Offer } from '../types/offer';
 import { ActionType } from '../types/store/actions';
+import { AuthorizationStatus } from '../utils/const';
 
 export const setCity = (cityName: string) => ({
   type: ActionType.SetCity,
@@ -16,4 +17,9 @@ export const loadOffers = (offers: Offer[]) => ({
   payload: {
     offers,
   },
+} as const);
+
+export const setAuthorizationStatus = (status: AuthorizationStatus) => ({
+  type: ActionType.SetAuthorizationStatus,
+  payload: status,
 } as const);
