@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'jwt_token';
+const TOKEN_KEY = 'authorization_token';
 
 export type Token = string;
 
