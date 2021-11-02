@@ -29,3 +29,7 @@ export const setUserData = (data: PrivateAuthInfo) => ({
   type: ActionType.SetUserData,
   payload: data,
 } as const);
+
+export const logOut = () => ({
+  type: ActionType.LogOut,
+} as const);

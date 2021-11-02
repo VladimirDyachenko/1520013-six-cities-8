@@ -32,6 +32,12 @@ const reducer = (state: State = initialState, action: Actions): State => {
         ...state,
         userData: action.payload,
       };
+    case ActionType.LogOut:
+      return {
+        ...state,
+        userData: undefined,
+        authorizationStatus: AuthorizationStatus.NoAuth,
+      };
     default:
       return state;
   }

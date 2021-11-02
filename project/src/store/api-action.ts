@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/store/actions';
-import { loadOffers, setAuthorizationStatus, setUserData } from './action';
+import { loadOffers, logOut, setAuthorizationStatus, setUserData } from './action';
 import { APIRoute, AuthorizationStatus } from '../utils/const';
 import { AuthInfoRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
@@ -33,4 +33,10 @@ export const loginAction = ({ email, password }: UserRequest): ThunkActionResult
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       dispatch(setUserData(adaptedData));
     }
+  };
+
+export const logOutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.delete(APIRoute.LogOut);
+    dispatch(logOut());
   };
