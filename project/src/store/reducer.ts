@@ -1,11 +1,13 @@
 import { ActionType, Actions } from '../types/store/actions';
 import { State } from '../types/store/state';
-import { INITIAL_CITY_NAME } from '../utils/const';
+import { AuthorizationStatus, INITIAL_CITY_NAME } from '../utils/const';
 
 const initialState: State = {
   cityName: INITIAL_CITY_NAME,
   offers: [],
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userData: undefined,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -19,6 +21,22 @@ const reducer = (state: State = initialState, action: Actions): State => {
         ...state,
         isDataLoaded: true,
         offers: action.payload.offers,
+      };
+    case ActionType.SetAuthorizationStatus:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.SetUserData:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+    case ActionType.LogOut:
+      return {
+        ...state,
+        userData: undefined,
+        authorizationStatus: AuthorizationStatus.NoAuth,
       };
     default:
       return state;

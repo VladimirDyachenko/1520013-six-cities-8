@@ -1,4 +1,5 @@
-import { HotelRes } from '../types/api-response';
+import { AuthInfoRes, HotelRes } from '../types/api-response';
+import { PrivateAuthInfo } from '../types/auth-info';
 import { Offer } from '../types/offer';
 
 export class APIAdapter {
@@ -36,6 +37,17 @@ export class APIAdapter {
       rating: hotel.rating,
       title: hotel.title,
       type: hotel.type,
+    };
+  }
+
+  static authInfoToClient(authInfo: AuthInfoRes): PrivateAuthInfo {
+    return {
+      avatarUrl: authInfo.avatar_url,
+      id: authInfo.id,
+      isPro: authInfo.is_pro,
+      name: authInfo.name,
+      email: authInfo.email,
+      token: authInfo.token,
     };
   }
 }
