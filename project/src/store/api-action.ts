@@ -16,22 +16,30 @@ export const fetchOffersAction = (): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.get<AuthInfoRes | undefined>(APIRoute.Login);
-    if (data) {
-      const adaptedData = APIAdapter.authInfoToClient(data);
-      dispatch(setUserData(adaptedData));
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    try {
+      const { data } = await api.get<AuthInfoRes | undefined>(APIRoute.Login);
+      if (data) {
+        const adaptedData = APIAdapter.authInfoToClient(data);
+        dispatch(setUserData(adaptedData));
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+      }
+    } catch {
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   };
 
 export const loginAction = ({ email, password }: UserRequest): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.post<AuthInfoRes | undefined>(APIRoute.Login, { email, password });
-    if (data) {
-      const adaptedData = APIAdapter.authInfoToClient(data);
-      setToken(adaptedData.token);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-      dispatch(setUserData(adaptedData));
+    try {
+      const { data } = await api.post<AuthInfoRes | undefined>(APIRoute.Login, { email, password });
+      if (data) {
+        const adaptedData = APIAdapter.authInfoToClient(data);
+        setToken(adaptedData.token);
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+        dispatch(setUserData(adaptedData));
+      }
+    } catch (error) {
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   };
 
