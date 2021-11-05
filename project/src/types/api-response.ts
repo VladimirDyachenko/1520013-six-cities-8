@@ -17,25 +17,25 @@ export type HotelRes = {
   'rating': number;
   'title': string;
   'type': OfferType;
-}
+};
 
 export type PublicAuthInfoRes = {
   'avatar_url': string;
   'id': number;
   'is_pro': boolean;
   'name': string;
-}
+};
 
 export type CityRes = {
   'location': GeoLocationRes;
   'name': string;
-}
+};
 
 export type GeoLocationRes = {
   'latitude': number;
   'longitude': number;
   'zoom': number;
-}
+};
 
 export type CommentGetRes = {
   'comment': string;
@@ -43,17 +43,12 @@ export type CommentGetRes = {
   'id': number;
   'rating': number;
   'user': PublicAuthInfoRes;
-}
-
-export type CommentPost = {
-  'comment': string;
-  'rating': number;
-}
+};
 
 export type UserLogin = {
   'email': string;
   'password': string;
-}
+};
 
 export type AuthInfoRes = {
   'avatar_url': string;
@@ -62,4 +57,4 @@ export type AuthInfoRes = {
   'name': string;
   'email': string;
   'token': string;
-}
+};
