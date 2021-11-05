@@ -4,7 +4,8 @@ export enum AppRoute {
   Main = '/',
   SignIn = '/login',
   Favorites = '/favorites',
-  Room = '/offer'
+  Room = '/offer',
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -59,4 +60,13 @@ export enum APIRoute {
   Hotels = '/hotels',
   Login = '/login',
   LogOut = '/logout',
+  Comments = '/comments',
+}
+
+export const BACKEND_URL = 'https://8.react.pages.academy/six-cities';
+
+export enum HttpCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }

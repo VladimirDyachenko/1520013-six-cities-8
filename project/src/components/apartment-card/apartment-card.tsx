@@ -5,7 +5,7 @@ import { AppRoute } from '../../utils/const';
 
 type ApartmentCardProps = {
   offer: Offer;
-  onMouseEnter: (id: number) => void;
+  onMouseEnter?: (id: number) => void;
   isNearByCard?: boolean;
 }
 
@@ -15,8 +15,14 @@ function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps):
   const articleClassName = isNearByCard ? 'near-places__card place-card' : 'cities__place-card place-card';
   const imageWrapperClassName = isNearByCard ? 'near-places__image-wrapper place-card__image-wrapper' : 'cities__image-wrapper place-card__image-wrapper';
 
+  const mouseEnterHandler = () => {
+    if (onMouseEnter !== undefined) {
+      onMouseEnter(id);
+    }
+  };
+
   return (
-    <article className={articleClassName} onMouseEnter={() => onMouseEnter(id)}>
+    <article className={articleClassName} onMouseEnter={mouseEnterHandler}>
       {isPremium ?
         <div className='place-card__mark'>
           <span>Premium</span>
