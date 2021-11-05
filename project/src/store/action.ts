@@ -1,4 +1,5 @@
 import { PrivateAuthInfo } from '../types/auth-info';
+import { Comment } from '../types/comment';
 import { Offer } from '../types/offer';
 import { ActionType } from '../types/store/actions';
 import { AuthorizationStatus } from '../utils/const';
@@ -32,4 +33,9 @@ export const setUserData = (data: PrivateAuthInfo) => ({
 
 export const logOut = () => ({
   type: ActionType.LogOut,
+} as const);
+
+export const setPropertyComments = (comments: Comment[]) => ({
+  type: ActionType.SetPropertyComments,
+  payload: comments,
 } as const);

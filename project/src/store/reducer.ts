@@ -8,6 +8,7 @@ const initialState: State = {
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: undefined,
+  propertyComments: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -37,6 +38,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
         ...state,
         userData: undefined,
         authorizationStatus: AuthorizationStatus.NoAuth,
+      };
+    case ActionType.SetPropertyComments:
+      return {
+        ...state,
+        propertyComments: action.payload,
       };
     default:
       return state;

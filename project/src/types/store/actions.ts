@@ -1,7 +1,15 @@
 import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { setCity, setOffers, loadOffers, setAuthorizationStatus, setUserData, logOut } from '../../store/action';
 import { State } from './state';
+import {
+  setCity,
+  setOffers,
+  loadOffers,
+  setAuthorizationStatus,
+  setUserData,
+  logOut,
+  setPropertyComments
+} from '../../store/action';
 
 export enum ActionType {
   SetCity = 'city/setCity',
@@ -10,6 +18,7 @@ export enum ActionType {
   SetAuthorizationStatus = 'user/setAuthStatus',
   SetUserData = 'user/setUserData',
   LogOut = 'user/logOut',
+  SetPropertyComments = 'property/comments',
 }
 
 export type Actions =
@@ -18,7 +27,8 @@ export type Actions =
   | ReturnType<typeof loadOffers>
   | ReturnType<typeof setAuthorizationStatus>
   | ReturnType<typeof setUserData>
-  | ReturnType<typeof logOut>;
+  | ReturnType<typeof logOut>
+  | ReturnType<typeof setPropertyComments>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

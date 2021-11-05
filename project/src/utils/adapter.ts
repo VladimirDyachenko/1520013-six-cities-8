@@ -1,5 +1,6 @@
-import { AuthInfoRes, HotelRes } from '../types/api-response';
+import { AuthInfoRes, CommentGetRes, HotelRes } from '../types/api-response';
 import { PrivateAuthInfo } from '../types/auth-info';
+import { Comment } from '../types/comment';
 import { Offer } from '../types/offer';
 
 export class APIAdapter {
@@ -48,6 +49,21 @@ export class APIAdapter {
       name: authInfo.name,
       email: authInfo.email,
       token: authInfo.token,
+    };
+  }
+
+  static commentToClient(comment: CommentGetRes): Comment {
+    return {
+      comment: comment.comment,
+      date: comment.date,
+      id: comment.id,
+      rating: comment.rating,
+      user: {
+        avatarUrl: comment.user.avatar_url,
+        id: comment.user.id,
+        isPro: comment.user.is_pro,
+        name: comment.user.name,
+      },
     };
   }
 }

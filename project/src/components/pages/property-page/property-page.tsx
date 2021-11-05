@@ -1,148 +1,91 @@
-import Header from '../../header/header';
-import ReviewList from '../../review-list/review-list';
-import { comments } from '../../../mocks/comments';
-import Map from '../../map/map';
-import { offers } from '../../../mocks/offers';
+import { useFetch } from '../../../hooks/useFetch';
+import { HotelRes } from '../../../types/api-response';
+import { useCallback, useEffect, useState } from 'react';
+import { Offer } from '../../../types/offer';
+import { APIAdapter } from '../../../utils/adapter';
+import { useHistory, useParams } from 'react-router';
+import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../../../utils/const';
 import ApartmentCard from '../../apartment-card/apartment-card';
-import { useState } from 'react';
+import OfferDetails from '../../offer-details/offer-details';
+import Header from '../../header/header';
+import { State as GlobalState } from '../../../types/store/state';
+import { ThunkAppDispatch } from '../../../types/store/actions';
+import { CommentPost } from '../../../types/api-request';
+import { addPropertyComments, loadPropertyComments } from '../../../store/api-action';
+import { connect, ConnectedProps } from 'react-redux';
 
-function PropertyPage(): JSX.Element {
-  const selectedOffer = offers[0];
-  const nearOffers = offers.slice(0, 3);
-  const [activeOfferId, setActiveOfferId] = useState<number>();
+type RouterParams = {
+  id: string;
+};
+
+const mapStateToProps = ({authorizationStatus, propertyComments}: GlobalState) => ({
+  authorizationStatus,
+  propertyComments,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  addPropertyComment(offerId: number, comment: CommentPost) {
+    dispatch(addPropertyComments(offerId, comment));
+  },
+  loadComments(offerId: number) {
+    dispatch(loadPropertyComments(offerId));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function PropertyPage(props: ConnectedComponentProps): JSX.Element {
+  const { authorizationStatus, propertyComments, addPropertyComment, loadComments } = props;
+  const params = useParams<RouterParams>();
+  const routerHistory = useHistory();
+  const { data: offerDetailsRes, errorCode: offerErrorCode } = useFetch<HotelRes>(`${APIRoute.Hotels}/${params.id}`);
+  const { data: nearByRes } = useFetch<HotelRes[]>(`${APIRoute.Hotels}/${params.id}/nearby`);
+  const [currentOffer, setCurrentOffer] = useState<Offer | null>(null);
+  const [nearBy, setNearBy] = useState<Offer[]>([]);
+  const addCommentHandler = useCallback((comment: CommentPost) => {
+    addPropertyComment(Number(params.id), comment);
+  }, [params.id, addPropertyComment]);
+
+  useEffect(() => {
+    offerDetailsRes ? setCurrentOffer(APIAdapter.offersToClient(offerDetailsRes)) : setCurrentOffer(null);
+  }, [offerDetailsRes]);
+
+  useEffect(() => {
+    if (offerErrorCode === HttpCode.NotFound) {
+      routerHistory.push(AppRoute.NotFound);
+    }
+  }, [offerErrorCode, routerHistory]);
+
+  useEffect(() => {
+    nearByRes ? setNearBy(nearByRes.map(APIAdapter.offersToClient)) : setNearBy([]);
+  }, [nearByRes]);
+
+  useEffect(() => {
+    loadComments(Number(params.id));
+  }, [params.id, loadComments]);
 
   return (
     <div className='page'>
       <Header/>
       <main className='page__main page__main--property'>
-        <section className='property'>
-          <div className='property__gallery-container container'>
-            <div className='property__gallery'>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/room.jpg' alt='Apartment'/>
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='Apartment'/>
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-02.jpg' alt='Apartment'/>
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-03.jpg' alt='Apartment'/>
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/studio-01.jpg' alt='Apartment'/>
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='Apartment'/>
-              </div>
-            </div>
-          </div>
-          <div className='property__container container'>
-            <div className='property__wrapper'>
-              <div className='property__mark'>
-                <span>Premium</span>
-              </div>
-              <div className='property__name-wrapper'>
-                <h1 className='property__name'>
-                Beautiful &amp; luxurious studio at great location
-                </h1>
-                <button className='property__bookmark-button button' type='button'>
-                  <svg className='property__bookmark-icon' width='31' height='33'>
-                    <use xlinkHref='#icon-bookmark'></use>
-                  </svg>
-                  <span className='visually-hidden'>To bookmarks</span>
-                </button>
-              </div>
-              <div className='property__rating rating'>
-                <div className='property__stars rating__stars'>
-                  <span style={{width: '80%'}}></span>
-                  <span className='visually-hidden'>Rating</span>
-                </div>
-                <span className='property__rating-value rating__value'>4.8</span>
-              </div>
-              <ul className='property__features'>
-                <li className='property__feature property__feature--entire'>
-                Apartment
-                </li>
-                <li className='property__feature property__feature--bedrooms'>
-                3 Bedrooms
-                </li>
-                <li className='property__feature property__feature--adults'>
-                Max 4 adults
-                </li>
-              </ul>
-              <div className='property__price'>
-                <b className='property__price-value'>&euro;120</b>
-                <span className='property__price-text'>&nbsp;night</span>
-              </div>
-              <div className='property__inside'>
-                <h2 className='property__inside-title'>What&apos;s inside</h2>
-                <ul className='property__inside-list'>
-                  <li className='property__inside-item'>
-                  Wi-Fi
-                  </li>
-                  <li className='property__inside-item'>
-                  Washing machine
-                  </li>
-                  <li className='property__inside-item'>
-                  Towels
-                  </li>
-                  <li className='property__inside-item'>
-                  Heating
-                  </li>
-                  <li className='property__inside-item'>
-                  Coffee machine
-                  </li>
-                  <li className='property__inside-item'>
-                  Baby seat
-                  </li>
-                  <li className='property__inside-item'>
-                  Kitchen
-                  </li>
-                  <li className='property__inside-item'>
-                  Dishwasher
-                  </li>
-                  <li className='property__inside-item'>
-                  Cabel TV
-                  </li>
-                  <li className='property__inside-item'>
-                  Fridge
-                  </li>
-                </ul>
-              </div>
-              <div className='property__host'>
-                <h2 className='property__host-title'>Meet the host</h2>
-                <div className='property__host-user user'>
-                  <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
-                    <img className='property__avatar user__avatar' src='img/avatar-angelina.jpg' width='74' height='74' alt='Host avatar'/>
-                  </div>
-                  <span className='property__user-name'>
-                  Angelina
-                  </span>
-                  <span className='property__user-status'>
-                  Pro
-                  </span>
-                </div>
-                <div className='property__description'>
-                  <p className='property__text'>
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className='property__text'>
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
-                </div>
-              </div>
-              <ReviewList reviews={comments}/>
-            </div>
-          </div>
-          <Map city={selectedOffer.city.location} offers={nearOffers} activeOfferId={activeOfferId} className='property__map'/>
-        </section>
+        {currentOffer && (
+          <OfferDetails
+            offer={currentOffer}
+            comments={propertyComments}
+            nearOffers={nearBy}
+            isAuthorized={authorizationStatus === AuthorizationStatus.Auth}
+            addCommentHandler={addCommentHandler}
+          />
+        )}
+
         <div className='container'>
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              {nearOffers.map((offer) => <ApartmentCard key={offer.id} offer={offer} onMouseEnter={setActiveOfferId} isNearByCard/>)}
+              {nearBy.map((offer) => <ApartmentCard key={offer.id} offer={offer} isNearByCard/>)}
             </div>
           </section>
         </div>
@@ -151,4 +94,5 @@ function PropertyPage(): JSX.Element {
   );
 }
 
-export default PropertyPage;
+export { PropertyPage };
+export default connector(PropertyPage);
