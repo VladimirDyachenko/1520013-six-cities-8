@@ -1,28 +1,53 @@
 import { useFetch } from '../../../hooks/useFetch';
-import { CommentGetRes, HotelRes } from '../../../types/api-response';
-import { useEffect, useState } from 'react';
+import { HotelRes } from '../../../types/api-response';
+import { useCallback, useEffect, useState } from 'react';
 import { Offer } from '../../../types/offer';
 import { APIAdapter } from '../../../utils/adapter';
 import { useHistory, useParams } from 'react-router';
-import { APIRoute, AppRoute, HttpCode } from '../../../utils/const';
+import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../../../utils/const';
 import ApartmentCard from '../../apartment-card/apartment-card';
 import OfferDetails from '../../offer-details/offer-details';
 import Header from '../../header/header';
-import { Comment } from '../../../types/comment';
+import { State as GlobalState } from '../../../types/store/state';
+import { ThunkAppDispatch } from '../../../types/store/actions';
+import { CommentPost } from '../../../types/api-request';
+import { addPropertyComments, loadPropertyComments } from '../../../store/api-action';
+import { connect, ConnectedProps } from 'react-redux';
 
 type RouterParams = {
   id: string;
 };
 
-function PropertyPage(): JSX.Element {
+const mapStateToProps = ({authorizationStatus, propertyComments}: GlobalState) => ({
+  authorizationStatus,
+  propertyComments,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  addPropertyComment(offerId: number, comment: CommentPost) {
+    dispatch(addPropertyComments(offerId, comment));
+  },
+  loadComments(offerId: number) {
+    dispatch(loadPropertyComments(offerId));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function PropertyPage(props: ConnectedComponentProps): JSX.Element {
+  const { authorizationStatus, propertyComments, addPropertyComment, loadComments } = props;
   const params = useParams<RouterParams>();
   const routerHistory = useHistory();
   const { data: offerDetailsRes, errorCode: offerErrorCode } = useFetch<HotelRes>(`${APIRoute.Hotels}/${params.id}`);
   const { data: nearByRes } = useFetch<HotelRes[]>(`${APIRoute.Hotels}/${params.id}/nearby`);
-  const { data: commentRes } = useFetch<CommentGetRes[]>(`${APIRoute.Comments}/${params.id}`);
   const [currentOffer, setCurrentOffer] = useState<Offer | null>(null);
   const [nearBy, setNearBy] = useState<Offer[]>([]);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const addCommentHandler = useCallback((comment: CommentPost) => {
+    addPropertyComment(Number(params.id), comment);
+  }, [params.id, addPropertyComment]);
 
   useEffect(() => {
     offerDetailsRes ? setCurrentOffer(APIAdapter.offersToClient(offerDetailsRes)) : setCurrentOffer(null);
@@ -39,14 +64,22 @@ function PropertyPage(): JSX.Element {
   }, [nearByRes]);
 
   useEffect(() => {
-    commentRes ? setComments(commentRes.map(APIAdapter.commentToClient)) : setComments([]);
-  }, [commentRes]);
+    loadComments(Number(params.id));
+  }, [params.id, loadComments]);
 
   return (
     <div className='page'>
       <Header/>
       <main className='page__main page__main--property'>
-        {currentOffer && <OfferDetails offer={currentOffer} comments={comments} nearOffers={nearBy}/>}
+        {currentOffer && (
+          <OfferDetails
+            offer={currentOffer}
+            comments={propertyComments}
+            nearOffers={nearBy}
+            isAuthorized={authorizationStatus === AuthorizationStatus.Auth}
+            addCommentHandler={addCommentHandler}
+          />
+        )}
 
         <div className='container'>
           <section className='near-places places'>
@@ -61,4 +94,5 @@ function PropertyPage(): JSX.Element {
   );
 }
 
-export default PropertyPage;
+export { PropertyPage };
+export default connector(PropertyPage);

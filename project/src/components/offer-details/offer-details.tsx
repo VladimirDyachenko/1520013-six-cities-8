@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { CommentPost } from '../../types/api-request';
 import { Comment } from '../../types/comment';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
@@ -9,9 +10,11 @@ type OfferDetailsProps = {
   offer: Offer;
   comments: Comment[],
   nearOffers: Offer[],
+  isAuthorized: boolean;
+  addCommentHandler: (comment: CommentPost) => void;
 }
 
-function OfferDetails({offer, comments, nearOffers }: OfferDetailsProps): JSX.Element {
+function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler }: OfferDetailsProps): JSX.Element {
   const [images, setImages] = useState<Array<string>>([]);
   useMemo(() => {
     setImages(offer.images.slice(0, Math.min(offer.images.length, 6)));
@@ -95,7 +98,7 @@ function OfferDetails({offer, comments, nearOffers }: OfferDetailsProps): JSX.El
               </p>
             </div>
           </div>
-          <ReviewList reviews={comments}/>
+          <ReviewList reviews={comments} isAuthorized={isAuthorized} addCommentHandler={addCommentHandler}/>
         </div>
       </div>
       <Map city={offer.city.location} offers={nearOffers} activeOfferId={offer.id} className='property__map'/>

@@ -1,13 +1,28 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { CommentPost } from '../../types/api-request';
 
-function AddReview(): JSX.Element {
+type AddReviewProps = {
+  addCommentHandler: (comment: CommentPost) => void;
+}
+
+function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState<number>();
+  const isFormInvalid = Boolean(rating === undefined || comment.length < 50 || comment.length > 300);
+  const onFormSubmit = (event: FormEvent) => {
+    event.preventDefault();
 
-  const isFormInvalid = Boolean(rating === undefined || comment.length < 50);
+    if(!isFormInvalid) {
+      addCommentHandler({
+        comment: comment,
+        rating: rating as number,
+      });
+      setComment('');
+    }
+  };
 
   return (
-    <form className='reviews__form form' action='#' method='post'>
+    <form onSubmit={onFormSubmit} className='reviews__form form' action='#' method='post'>
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
