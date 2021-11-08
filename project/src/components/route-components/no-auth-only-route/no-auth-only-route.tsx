@@ -1,5 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../../store/user-data/selectors';
 import { State } from '../../../types/store/state';
 import { AppRoute, AuthorizationStatus } from '../../../utils/const';
 
@@ -7,8 +8,8 @@ type NoAuthOnlyRouteProps = RouteProps & {
   render: () => JSX.Element;
 };
 
-const mapStateToProps = ({ USER }: State) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const connector = connect(mapStateToProps);

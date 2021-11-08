@@ -10,9 +10,10 @@ import NoAuthOnlyRoute from '../route-components/no-auth-only-route/no-auth-only
 import PrivateRoute from '../route-components/private-route/private-route';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getIsDataLoaded } from '../../store/offers-data/selectors';
 
-const mapStateToProps = ({ OFFERS }:State) => ({
-  isDataLoaded: OFFERS.isDataLoaded,
+const mapStateToProps = (state: State) => ({
+  isDataLoaded: getIsDataLoaded(state),
 });
 
 const connector = connect(mapStateToProps);

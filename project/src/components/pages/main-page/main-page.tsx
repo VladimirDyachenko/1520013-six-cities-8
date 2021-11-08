@@ -10,10 +10,12 @@ import { Actions } from '../../../types/store/actions';
 import { setCity } from '../../../store/action';
 import { AvailableCity, offersSortOptions } from '../../../utils/const';
 import { IOfferSortOption } from '../../../types/offer';
+import { getOffersForCity } from '../../../store/offers-data/selectors';
+import { getSelectedCity } from '../../../store/offers-list/selectors';
 
-const mapStateToProps = ({ OFFERS, OFFER_LIST }: State) => ({
-  cityName: OFFER_LIST.cityName,
-  offers: OFFERS.offers,
+const mapStateToProps = (state: State) => ({
+  cityName: getSelectedCity(state),
+  offers: getOffersForCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -34,10 +36,8 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<number>();
   const [selectedSort, setSelectedSort] = useState(offersSortOptions[0]);
   const filteredOffers = useMemo(
-    () => offers
-      .filter((offer) => offer.city.name.toLowerCase() === cityName.toLocaleLowerCase())
-      .sort(selectedSort.sortFunction),
-    [offers, cityName, selectedSort],
+    () => offers.sort(selectedSort.sortFunction),
+    [offers, selectedSort],
   );
 
   const handleSortingChange = (sortOption: IOfferSortOption) => {
