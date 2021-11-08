@@ -11,9 +11,9 @@ import { setCity } from '../../../store/action';
 import { AvailableCity, offersSortOptions } from '../../../utils/const';
 import { IOfferSortOption } from '../../../types/offer';
 
-const mapStateToProps = ({cityName, offers}: State) => ({
-  cityName,
-  offers,
+const mapStateToProps = ({ OFFERS, OFFER_LIST }: State) => ({
+  cityName: OFFER_LIST.cityName,
+  offers: OFFERS.offers,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

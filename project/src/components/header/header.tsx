@@ -6,9 +6,9 @@ import { ThunkAppDispatch } from '../../types/store/actions';
 import { State } from '../../types/store/state';
 import { AppRoute, AuthorizationStatus } from '../../utils/const';
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: state.authorizationStatus,
-  userData: state.userData,
+const mapStateToProps = ({ USER }: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  userData: USER.userData,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

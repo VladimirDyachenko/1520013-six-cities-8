@@ -8,7 +8,7 @@ import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../../../util
 import ApartmentCard from '../../apartment-card/apartment-card';
 import OfferDetails from '../../offer-details/offer-details';
 import Header from '../../header/header';
-import { State as GlobalState } from '../../../types/store/state';
+import { State } from '../../../types/store/state';
 import { ThunkAppDispatch } from '../../../types/store/actions';
 import { CommentPost } from '../../../types/api-request';
 import { addPropertyComments, loadPropertyComments } from '../../../store/api-action';
@@ -18,9 +18,9 @@ type RouterParams = {
   id: string;
 };
 
-const mapStateToProps = ({authorizationStatus, propertyComments}: GlobalState) => ({
-  authorizationStatus,
-  propertyComments,
+const mapStateToProps = ({ USER, PROPERTY_COMMENTS }: State) => ({
+  authorizationStatus: USER.authorizationStatus,
+  propertyComments: PROPERTY_COMMENTS.propertyComments,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

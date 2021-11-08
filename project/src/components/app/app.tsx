@@ -11,8 +11,8 @@ import PrivateRoute from '../route-components/private-route/private-route';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const mapStateToProps = ({ isDataLoaded }:State) => ({
-  isDataLoaded,
+const mapStateToProps = ({ OFFERS }:State) => ({
+  isDataLoaded: OFFERS.isDataLoaded,
 });
 
 const connector = connect(mapStateToProps);
