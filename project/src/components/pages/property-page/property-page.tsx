@@ -4,23 +4,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { Offer } from '../../../types/offer';
 import { APIAdapter } from '../../../utils/adapter';
 import { useHistory, useParams } from 'react-router';
-import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../../../utils/const';
+import { APIRoute, AppRoute, HttpCode } from '../../../utils/const';
 import ApartmentCard from '../../apartment-card/apartment-card';
 import OfferDetails from '../../offer-details/offer-details';
 import Header from '../../header/header';
-import { State as GlobalState } from '../../../types/store/state';
+import { State } from '../../../types/store/state';
 import { ThunkAppDispatch } from '../../../types/store/actions';
 import { CommentPost } from '../../../types/api-request';
 import { addPropertyComments, loadPropertyComments } from '../../../store/api-action';
 import { connect, ConnectedProps } from 'react-redux';
+import { getIsAuthorized } from '../../../store/user-data/selectors';
+import { getPropertyComments } from '../../../store/property-comments/selectors';
 
 type RouterParams = {
   id: string;
 };
 
-const mapStateToProps = ({authorizationStatus, propertyComments}: GlobalState) => ({
-  authorizationStatus,
-  propertyComments,
+const mapStateToProps = (state: State) => ({
+  isAuthorized: getIsAuthorized(state),
+  propertyComments: getPropertyComments(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -38,7 +40,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function PropertyPage(props: ConnectedComponentProps): JSX.Element {
-  const { authorizationStatus, propertyComments, addPropertyComment, loadComments } = props;
+  const { isAuthorized, propertyComments, addPropertyComment, loadComments } = props;
   const params = useParams<RouterParams>();
   const routerHistory = useHistory();
   const { data: offerDetailsRes, errorCode: offerErrorCode } = useFetch<HotelRes>(`${APIRoute.Hotels}/${params.id}`);
@@ -76,7 +78,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
             offer={currentOffer}
             comments={propertyComments}
             nearOffers={nearBy}
-            isAuthorized={authorizationStatus === AuthorizationStatus.Auth}
+            isAuthorized={isAuthorized}
             addCommentHandler={addCommentHandler}
           />
         )}

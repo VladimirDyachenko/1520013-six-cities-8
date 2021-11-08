@@ -2,13 +2,14 @@ import { MouseEvent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logOutAction } from '../../store/api-action';
+import { getIsAuthorized, getUserData } from '../../store/user-data/selectors';
 import { ThunkAppDispatch } from '../../types/store/actions';
 import { State } from '../../types/store/state';
-import { AppRoute, AuthorizationStatus } from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 
 const mapStateToProps = (state: State) => ({
-  authorizationStatus: state.authorizationStatus,
-  userData: state.userData,
+  isAuthorized: getIsAuthorized(state),
+  userData: getUserData(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -22,7 +23,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Header(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, userData, onLogOut } = props;
+  const { isAuthorized, userData, onLogOut } = props;
 
   const handleLogOut = (event: MouseEvent) => {
     event.preventDefault();
@@ -71,7 +72,7 @@ function Header(props: PropsFromRedux): JSX.Element {
             </Link>
           </div>
           <nav className='header__nav'>
-            { authorizationStatus === AuthorizationStatus.Auth ? authenticatedUser : notAuthenticatedUser}
+            { isAuthorized ? authenticatedUser : notAuthenticatedUser}
           </nav>
         </div>
       </div>

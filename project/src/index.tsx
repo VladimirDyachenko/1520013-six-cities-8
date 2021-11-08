@@ -7,15 +7,15 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createAPI } from './services/api';
 import App from './components/app/app';
 import { fetchOffersAction, checkAuthAction } from './store/api-action';
-import { reducer } from './store/reducer';
 import { ThunkAppDispatch } from './types/store/actions';
 import { setAuthorizationStatus } from './store/action';
 import { AuthorizationStatus } from './utils/const';
+import { rootReducer } from './store/root-reducer';
 
 const api = createAPI(() => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth)));
 
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
   ),
