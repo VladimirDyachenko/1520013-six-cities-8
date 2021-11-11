@@ -23,9 +23,13 @@ const offersData = (state = initialState, action: Actions): OffersData => {
       };
     case ActionType.UpdateOffer: {
       const offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+      const nearByPlaces = state.nearByPlaces.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+      const offerDetails = state.offerDetails?.id === action.payload.id ? action.payload : state.offerDetails;
       return {
         ...state,
         offers: offers,
+        offerDetails,
+        nearByPlaces,
       };
     }
     case ActionType.SetNearBy:

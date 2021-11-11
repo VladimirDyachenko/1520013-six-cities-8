@@ -12,9 +12,11 @@ type OfferDetailsProps = {
   nearOffers: Offer[],
   isAuthorized: boolean;
   addCommentHandler: (comment: CommentPost) => void;
+  onToggleFavorite: (id: number, isFavorite: boolean) => void;
 }
 
-function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler }: OfferDetailsProps): JSX.Element {
+function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler, onToggleFavorite }: OfferDetailsProps): JSX.Element {
+  const favoriteClassName = offer.isFavorite ? 'property__bookmark-button--active' : '';
   const [images, setImages] = useState<Array<string>>([]);
   useMemo(() => {
     setImages(offer.images.slice(0, Math.min(offer.images.length, 6)));
@@ -43,7 +45,11 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
             <h1 className='property__name'>
               {offer.title}
             </h1>
-            <button className='property__bookmark-button button' type='button'>
+            <button
+              className={`property__bookmark-button ${favoriteClassName} button`}
+              type='button'
+              onClick={(() => onToggleFavorite(offer.id, !offer.isFavorite))}
+            >
               <svg className='property__bookmark-icon' width='31' height='33'>
                 <use xlinkHref='#icon-bookmark'></use>
               </svg>
