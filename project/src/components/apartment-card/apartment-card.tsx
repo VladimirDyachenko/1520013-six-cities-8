@@ -5,6 +5,7 @@ import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
+import { floor } from '../../utils/function';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onToggleFavorite(offerId: number, isFavorite: boolean) {
@@ -78,7 +79,7 @@ function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: 
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{width: `${(rating / 10 * 100) * 2}%`}}></span>
+            <span style={{width: `${(floor(rating) / 10 * 100) * 2}%`}}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
