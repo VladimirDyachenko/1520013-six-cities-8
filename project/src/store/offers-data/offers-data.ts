@@ -6,6 +6,7 @@ const initialState: OffersData = {
   isDataLoaded: false,
   nearByPlaces: [],
   offerDetails: undefined,
+  favoriteOffers: [],
 };
 
 const offersData = (state = initialState, action: Actions): OffersData => {
@@ -25,11 +26,19 @@ const offersData = (state = initialState, action: Actions): OffersData => {
       const offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
       const nearByPlaces = state.nearByPlaces.map((offer) => offer.id === action.payload.id ? action.payload : offer);
       const offerDetails = state.offerDetails?.id === action.payload.id ? action.payload : state.offerDetails;
+      const favoriteOffers = state.favoriteOffers.filter((item) => {
+        if ((item.id === action.payload.id && action.payload.isFavorite) || item.id !== action.payload.id) {
+          return true;
+        }
+        return false;
+      });
+
       return {
         ...state,
-        offers: offers,
+        offers,
         offerDetails,
         nearByPlaces,
+        favoriteOffers,
       };
     }
     case ActionType.SetNearBy:
@@ -41,6 +50,11 @@ const offersData = (state = initialState, action: Actions): OffersData => {
       return {
         ...state,
         offerDetails: action.payload,
+      };
+    case ActionType.SetFavoriteOffers:
+      return {
+        ...state,
+        favoriteOffers: action.payload.offers,
       };
     default:
       return state;

@@ -16,6 +16,7 @@ export type OffersData = {
   isDataLoaded: boolean,
   nearByPlaces: Offer[],
   offerDetails?: Offer,
+  favoriteOffers: Offer[],
 };
 
 export type OffersList = {

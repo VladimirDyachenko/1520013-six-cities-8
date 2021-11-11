@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/store/actions';
-import { loadOffers, logOut, redirectToRoute, setAuthorizationStatus, setNearByOffers, setOfferDetails, setPropertyComments, setUserData, updateOffer } from './action';
+import { loadOffers, logOut, redirectToRoute, setAuthorizationStatus, setFavoriteOffers, setNearByOffers, setOfferDetails, setPropertyComments, setUserData, updateOffer } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../utils/const';
 import { AuthInfoRes, CommentGetRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
@@ -126,6 +126,21 @@ export const loadOfferDetailsAction = (offerId: number): ThunkActionResult =>
       if (axios.isAxiosError(error)) {
         if (error.response?.status === HttpCode.NotFound) {
           dispatch(redirectToRoute(AppRoute.NotFound));
+        }
+      }
+    }
+  };
+
+export const fetchFavoriteOffersAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.get<HotelRes[]>(APIRoute.Favorite);
+      const adaptedData = data.map(APIAdapter.offersToClient);
+      dispatch(setFavoriteOffers(adaptedData));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
         }
       }
     }

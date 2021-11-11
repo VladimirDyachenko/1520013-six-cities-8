@@ -1,6 +1,9 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toggleFavoriteStatus } from '../../store/api-action';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
 import { floor } from '../../utils/function';
 
@@ -8,7 +11,18 @@ type FavoritesCardProps = {
   offer: Offer
 };
 
-function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onToggleFavorite(offerId: number, isFavorite: boolean) {
+    dispatch(toggleFavoriteStatus(offerId, isFavorite));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & FavoritesCardProps;
+
+function FavoritesCard({offer, onToggleFavorite}: ConnectedComponentProps): JSX.Element {
   const { id, previewImage, price, rating, title, type } = offer;
 
   return (
@@ -33,6 +47,7 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
           <button
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
+            onClick={() => onToggleFavorite(offer.id, !offer.isFavorite)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -55,4 +70,5 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
   );
 }
 
-export default FavoritesCard;
+export { FavoritesCard };
+export default connector(FavoritesCard);

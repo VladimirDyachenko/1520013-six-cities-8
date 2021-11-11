@@ -44,7 +44,7 @@ function App({isDataLoaded}: PropsFromRedux): JSX.Element {
         <PrivateRoute
           path={AppRoute.Favorites}
           exact
-          render={() => <FavoritesPage offers={[]}/>}
+          render={() => <FavoritesPage/>}
         />
         <Route path="">
           <NotFoundPage/>

@@ -1,14 +1,34 @@
+import { useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Offer } from '../../../types/offer';
+import { fetchFavoriteOffersAction } from '../../../store/api-action';
+import { getFavoriteOffers } from '../../../store/offers-data/selectors';
+import { ThunkAppDispatch } from '../../../types/store/actions';
+import { State } from '../../../types/store/state';
 import { AppRoute } from '../../../utils/const';
 import FavoritesList from '../../favorites-list/favorites-list';
 import Header from '../../header/header';
 
-type FavoritesPageProps = {
-  offers: Offer[]
-};
+const mapStateToProps = (state: State) => ({
+  favoriteOffers: getFavoriteOffers(state),
+});
 
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  loadData() {
+    dispatch(fetchFavoriteOffersAction());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux;
+
+function FavoritesPage(props: ConnectedComponentProps): JSX.Element {
+  const { favoriteOffers: offers, loadData } = props;
+
+  useEffect(() => loadData(), [loadData]);
+
   return (
     <div className='page'>
       <Header/>
@@ -29,4 +49,5 @@ function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
   );
 }
 
-export default FavoritesPage;
+export { FavoritesPage };
+export default connector(FavoritesPage);

@@ -59,3 +59,10 @@ export const redirectToRoute = (url: AppRoute) => ({
   type: ActionType.RedirectToRoute,
   payload: url,
 } as const);
+
+export const setFavoriteOffers = (offers: Offer[]) => ({
+  type: ActionType.SetFavoriteOffers,
+  payload: {
+    offers,
+  },
+} as const);

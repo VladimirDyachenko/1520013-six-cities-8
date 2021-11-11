@@ -12,7 +12,8 @@ import {
   updateOffer,
   setOfferDetails,
   setNearByOffers,
-  redirectToRoute
+  redirectToRoute,
+  setFavoriteOffers
 } from '../../store/action';
 
 export enum ActionType {
@@ -27,6 +28,7 @@ export enum ActionType {
   LogOut = 'user/logOut',
   SetPropertyComments = 'property/comments',
   RedirectToRoute = 'navigation/RedirectToRoute',
+  SetFavoriteOffers = 'offers/setFavoriteOffers',
 }
 
 export type Actions =
@@ -40,7 +42,8 @@ export type Actions =
   | ReturnType<typeof updateOffer>
   | ReturnType<typeof setOfferDetails>
   | ReturnType<typeof setNearByOffers>
-  | ReturnType<typeof redirectToRoute>;
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof setFavoriteOffers>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
