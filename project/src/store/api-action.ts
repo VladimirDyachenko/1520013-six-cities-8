@@ -1,10 +1,11 @@
 import { ThunkActionResult } from '../types/store/actions';
-import { loadOffers, logOut, setAuthorizationStatus, setNearByOffers, setOfferDetails, setPropertyComments, setUserData, updateOffer } from './action';
-import { APIRoute, AuthorizationStatus } from '../utils/const';
+import { loadOffers, logOut, redirectToRoute, setAuthorizationStatus, setNearByOffers, setOfferDetails, setPropertyComments, setUserData, updateOffer } from './action';
+import { APIRoute, AppRoute, AuthorizationStatus, HttpCode } from '../utils/const';
 import { AuthInfoRes, CommentGetRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
 import { CommentPost, UserRequest } from '../types/api-request';
 import { dropToken, setToken } from '../services/token';
+import axios from 'axios';
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -12,7 +13,6 @@ export const fetchOffersAction = (): ThunkActionResult =>
     const adaptedData = data.map(APIAdapter.offersToClient);
     dispatch(loadOffers(adaptedData));
   };
-
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -72,9 +72,12 @@ export const addPropertyCommentsAction = (offerId: number, comment: CommentPost)
         const comments = data.map(APIAdapter.commentToClient);
         dispatch(setPropertyComments(comments));
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
     }
   };
 
@@ -88,9 +91,12 @@ export const toggleFavoriteStatus = (offerId: number, isFavorite: boolean): Thun
         const adaptedOffer = APIAdapter.offersToClient(data);
         dispatch(updateOffer(adaptedOffer));
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
     }
   };
 
@@ -116,8 +122,11 @@ export const loadOfferDetailsAction = (offerId: number): ThunkActionResult =>
         const adaptedOffer = APIAdapter.offersToClient(data);
         dispatch(setOfferDetails(adaptedOffer));
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.NotFound) {
+          dispatch(redirectToRoute(AppRoute.NotFound));
+        }
+      }
     }
   };

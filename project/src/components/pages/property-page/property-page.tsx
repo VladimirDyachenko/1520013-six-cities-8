@@ -61,17 +61,10 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
     onToggleFavorite,
   } = props;
   const params = useParams<RouterParams>();
-  // const routerHistory = useHistory();
 
   const addCommentHandler = useCallback((comment: CommentPost) => {
     addPropertyComment(Number(params.id), comment);
   }, [params.id, addPropertyComment]);
-
-  // useEffect(() => {
-  //   if (offerErrorCode === HttpCode.NotFound) {
-  //     routerHistory.push(AppRoute.NotFound);
-  //   }
-  // }, [offerErrorCode, routerHistory]);
 
   useEffect(() => {
     loadData(Number(params.id));

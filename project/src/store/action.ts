@@ -2,7 +2,7 @@ import { PrivateAuthInfo } from '../types/auth-info';
 import { Comment } from '../types/comment';
 import { Offer } from '../types/offer';
 import { ActionType } from '../types/store/actions';
-import { AuthorizationStatus } from '../utils/const';
+import { AppRoute, AuthorizationStatus } from '../utils/const';
 
 export const setCity = (cityName: string) => ({
   type: ActionType.SetCity,
@@ -53,4 +53,9 @@ export const logOut = () => ({
 export const setPropertyComments = (comments: Comment[]) => ({
   type: ActionType.SetPropertyComments,
   payload: comments,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);
