@@ -14,6 +14,8 @@ export type UserData = {
 export type OffersData = {
   offers: Offer[];
   isDataLoaded: boolean,
+  nearByPlaces: Offer[],
+  offerDetails?: Offer,
 };
 
 export type OffersList = {

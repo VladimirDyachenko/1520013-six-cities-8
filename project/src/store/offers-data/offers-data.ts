@@ -4,6 +4,8 @@ import { OffersData } from '../../types/store/state';
 const initialState: OffersData = {
   offers: [],
   isDataLoaded: false,
+  nearByPlaces: [],
+  offerDetails: undefined,
 };
 
 const offersData = (state = initialState, action: Actions): OffersData => {
@@ -26,6 +28,16 @@ const offersData = (state = initialState, action: Actions): OffersData => {
         offers: offers,
       };
     }
+    case ActionType.SetNearBy:
+      return {
+        ...state,
+        nearByPlaces: action.payload,
+      };
+    case ActionType.SetOfferDetails:
+      return {
+        ...state,
+        offerDetails: action.payload,
+      };
     default:
       return state;
   }

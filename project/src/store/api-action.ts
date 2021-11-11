@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/store/actions';
-import { loadOffers, logOut, setAuthorizationStatus, setPropertyComments, setUserData, updateOffer } from './action';
+import { loadOffers, logOut, setAuthorizationStatus, setNearByOffers, setOfferDetails, setPropertyComments, setUserData, updateOffer } from './action';
 import { APIRoute, AuthorizationStatus } from '../utils/const';
 import { AuthInfoRes, CommentGetRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
@@ -50,7 +50,7 @@ export const logOutAction = (): ThunkActionResult =>
     dispatch(logOut());
   };
 
-export const loadPropertyComments = (offerId: number): ThunkActionResult =>
+export const loadPropertyCommentsAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const { data } = await api.get<CommentGetRes[] | undefined>(`${APIRoute.Comments}/${offerId}`);
@@ -64,7 +64,7 @@ export const loadPropertyComments = (offerId: number): ThunkActionResult =>
     }
   };
 
-export const addPropertyComments = (offerId: number, comment: CommentPost): ThunkActionResult =>
+export const addPropertyCommentsAction = (offerId: number, comment: CommentPost): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const { data } = await api.post<CommentGetRes[] | undefined>(`${APIRoute.Comments}/${offerId}`, comment);
@@ -83,9 +83,39 @@ export const toggleFavoriteStatus = (offerId: number, isFavorite: boolean): Thun
 
     const newFavoriteStatus = isFavorite ? 1 : 0;
     try {
-      const { data } = await api.post<HotelRes>(`${APIRoute.Favorite}/${offerId}/${newFavoriteStatus}`);
-      const adaptedOffer = APIAdapter.offersToClient(data);
-      dispatch(updateOffer(adaptedOffer));
+      const { data } = await api.post<HotelRes | undefined>(`${APIRoute.Favorite}/${offerId}/${newFavoriteStatus}`);
+      if (data) {
+        const adaptedOffer = APIAdapter.offersToClient(data);
+        dispatch(updateOffer(adaptedOffer));
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const loadNearByAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const { data } = await api.get<HotelRes[] | undefined>(`${APIRoute.Hotels}/${offerId}/nearby`);
+      if (data) {
+        const adaptedOffers = data.map(APIAdapter.offersToClient);
+        dispatch(setNearByOffers(adaptedOffers));
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const loadOfferDetailsAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    try {
+      const { data } = await api.get<HotelRes | undefined>(`${APIRoute.Hotels}/${offerId}`);
+      if (data) {
+        const adaptedOffer = APIAdapter.offersToClient(data);
+        dispatch(setOfferDetails(adaptedOffer));
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

@@ -1,20 +1,18 @@
-import { useFetch } from '../../../hooks/useFetch';
-import { HotelRes } from '../../../types/api-response';
-import { useCallback, useEffect, useState } from 'react';
-import { Offer } from '../../../types/offer';
-import { APIAdapter } from '../../../utils/adapter';
-import { useHistory, useParams } from 'react-router';
-import { APIRoute, AppRoute, HttpCode } from '../../../utils/const';
+import { useCallback, useEffect } from 'react';
+import { useParams } from 'react-router';
 import ApartmentCard from '../../apartment-card/apartment-card';
 import OfferDetails from '../../offer-details/offer-details';
 import Header from '../../header/header';
 import { State } from '../../../types/store/state';
 import { ThunkAppDispatch } from '../../../types/store/actions';
 import { CommentPost } from '../../../types/api-request';
-import { addPropertyComments, loadPropertyComments } from '../../../store/api-action';
+import { addPropertyCommentsAction, loadNearByAction, loadOfferDetailsAction, loadPropertyCommentsAction, toggleFavoriteStatus } from '../../../store/api-action';
 import { connect, ConnectedProps } from 'react-redux';
 import { getIsAuthorized } from '../../../store/user-data/selectors';
 import { getPropertyComments } from '../../../store/property-comments/selectors';
+import { getNearByOffers, getOfferDetails } from '../../../store/offers-data/selectors';
+import { setNearByOffers, setOfferDetails, setPropertyComments } from '../../../store/action';
+import LoadingScreen from '../../loading-screen/loading-screen';
 
 type RouterParams = {
   id: string;
@@ -23,14 +21,26 @@ type RouterParams = {
 const mapStateToProps = (state: State) => ({
   isAuthorized: getIsAuthorized(state),
   propertyComments: getPropertyComments(state),
+  nearBy: getNearByOffers(state),
+  currentOffer: getOfferDetails(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   addPropertyComment(offerId: number, comment: CommentPost) {
-    dispatch(addPropertyComments(offerId, comment));
+    dispatch(addPropertyCommentsAction(offerId, comment));
   },
-  loadComments(offerId: number) {
-    dispatch(loadPropertyComments(offerId));
+  loadData(offerId: number) {
+    dispatch(loadPropertyCommentsAction(offerId));
+    dispatch(loadNearByAction(offerId));
+    dispatch(loadOfferDetailsAction(offerId));
+  },
+  resetData() {
+    dispatch(setPropertyComments([]));
+    dispatch(setOfferDetails(undefined));
+    dispatch(setNearByOffers([]));
+  },
+  onToggleFavorite(offerId: number, isFavorite: boolean) {
+    dispatch(toggleFavoriteStatus(offerId, isFavorite));
   },
 });
 
@@ -40,48 +50,49 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
 function PropertyPage(props: ConnectedComponentProps): JSX.Element {
-  const { isAuthorized, propertyComments, addPropertyComment, loadComments } = props;
+  const {
+    isAuthorized,
+    propertyComments,
+    nearBy,
+    currentOffer,
+    addPropertyComment,
+    loadData,
+    resetData,
+    onToggleFavorite,
+  } = props;
   const params = useParams<RouterParams>();
-  const routerHistory = useHistory();
-  const { data: offerDetailsRes, errorCode: offerErrorCode } = useFetch<HotelRes>(`${APIRoute.Hotels}/${params.id}`);
-  const { data: nearByRes } = useFetch<HotelRes[]>(`${APIRoute.Hotels}/${params.id}/nearby`);
-  const [currentOffer, setCurrentOffer] = useState<Offer | null>(null);
-  const [nearBy, setNearBy] = useState<Offer[]>([]);
+  // const routerHistory = useHistory();
+
   const addCommentHandler = useCallback((comment: CommentPost) => {
     addPropertyComment(Number(params.id), comment);
   }, [params.id, addPropertyComment]);
 
-  useEffect(() => {
-    offerDetailsRes ? setCurrentOffer(APIAdapter.offersToClient(offerDetailsRes)) : setCurrentOffer(null);
-  }, [offerDetailsRes]);
+  // useEffect(() => {
+  //   if (offerErrorCode === HttpCode.NotFound) {
+  //     routerHistory.push(AppRoute.NotFound);
+  //   }
+  // }, [offerErrorCode, routerHistory]);
 
   useEffect(() => {
-    if (offerErrorCode === HttpCode.NotFound) {
-      routerHistory.push(AppRoute.NotFound);
-    }
-  }, [offerErrorCode, routerHistory]);
+    loadData(Number(params.id));
 
-  useEffect(() => {
-    nearByRes ? setNearBy(nearByRes.map(APIAdapter.offersToClient)) : setNearBy([]);
-  }, [nearByRes]);
-
-  useEffect(() => {
-    loadComments(Number(params.id));
-  }, [params.id, loadComments]);
+    return () => resetData();
+  }, [params.id, loadData, resetData]);
 
   return (
     <div className='page'>
       <Header/>
       <main className='page__main page__main--property'>
-        {currentOffer && (
+        {currentOffer ? (
           <OfferDetails
             offer={currentOffer}
             comments={propertyComments}
             nearOffers={nearBy}
             isAuthorized={isAuthorized}
             addCommentHandler={addCommentHandler}
+            onToggleFavorite={onToggleFavorite}
           />
-        )}
+        ) : <LoadingScreen/>}
 
         <div className='container'>
           <section className='near-places places'>

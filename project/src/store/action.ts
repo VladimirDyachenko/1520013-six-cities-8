@@ -19,6 +19,16 @@ export const updateOffer = (offer: Offer) => ({
   payload: offer,
 } as const);
 
+export const setOfferDetails = (offer: Offer | undefined) => ({
+  type: ActionType.SetOfferDetails,
+  payload: offer,
+} as const);
+
+export const setNearByOffers = (offer: Offer[]) => ({
+  type: ActionType.SetNearBy,
+  payload: offer,
+} as const);
+
 export const loadOffers = (offers: Offer[]) => ({
   type: ActionType.LoadOffers,
   payload: {
