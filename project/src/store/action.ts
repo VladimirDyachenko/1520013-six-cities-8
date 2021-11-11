@@ -14,6 +14,11 @@ export const setOffers = (offers: Offer[]) => ({
   payload: offers,
 } as const);
 
+export const updateOffer = (offer: Offer) => ({
+  type: ActionType.UpdateOffer,
+  payload: offer,
+} as const);
+
 export const loadOffers = (offers: Offer[]) => ({
   type: ActionType.LoadOffers,
   payload: {

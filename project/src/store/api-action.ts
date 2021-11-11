@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/store/actions';
-import { loadOffers, logOut, setAuthorizationStatus, setPropertyComments, setUserData } from './action';
+import { loadOffers, logOut, setAuthorizationStatus, setPropertyComments, setUserData, updateOffer } from './action';
 import { APIRoute, AuthorizationStatus } from '../utils/const';
 import { AuthInfoRes, CommentGetRes, HotelRes } from '../types/api-response';
 import { APIAdapter } from '../utils/adapter';
@@ -72,6 +72,20 @@ export const addPropertyComments = (offerId: number, comment: CommentPost): Thun
         const comments = data.map(APIAdapter.commentToClient);
         dispatch(setPropertyComments(comments));
       }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const toggleFavoriteStatus = (offerId: number, isFavorite: boolean): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+
+    const newFavoriteStatus = isFavorite ? 1 : 0;
+    try {
+      const { data } = await api.post<HotelRes>(`${APIRoute.Favorite}/${offerId}/${newFavoriteStatus}`);
+      const adaptedOffer = APIAdapter.offersToClient(data);
+      dispatch(updateOffer(adaptedOffer));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

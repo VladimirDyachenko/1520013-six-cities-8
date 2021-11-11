@@ -19,6 +19,13 @@ const offersData = (state = initialState, action: Actions): OffersData => {
         ...state,
         offers: action.payload,
       };
+    case ActionType.UpdateOffer: {
+      const offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
+      return {
+        ...state,
+        offers: offers,
+      };
+    }
     default:
       return state;
   }
