@@ -1,4 +1,4 @@
-import { Dispatch, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
@@ -6,9 +6,7 @@ import Map from '../../map/map';
 import LocationsTabs from '../../locations-tabs/locations-tabs';
 import SortForm from '../../sort-form/sort-form';
 import { State } from '../../../types/store/state';
-import { Actions } from '../../../types/store/actions';
-import { setCity } from '../../../store/action';
-import { AvailableCity, offersSortOptions } from '../../../utils/const';
+import { offersSortOptions } from '../../../utils/const';
 import { IOfferSortOption } from '../../../types/offer';
 import { getOffersForCity } from '../../../store/offers-data/selectors';
 import { getSelectedCity } from '../../../store/offers-list/selectors';
@@ -18,21 +16,13 @@ const mapStateToProps = (state: State) => ({
   offers: getOffersForCity(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onSetCity(city: string) {
-    dispatch(setCity(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
-const availableCities = Object.values(AvailableCity);
-
 function MainPage(props: ConnectedComponentProps): JSX.Element {
-  const {offers, cityName, onSetCity} = props;
+  const { offers, cityName } = props;
   const [activeOfferId, setActiveOfferId] = useState<number>();
   const [selectedSort, setSelectedSort] = useState(offersSortOptions[0]);
   const filteredOffers = useMemo(
@@ -49,11 +39,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
       <Header/>
       <main className='page__main page__main--index'>
         <h1 className='visually-hidden'>Cities</h1>
-        <LocationsTabs
-          locations={availableCities}
-          selectedLocation={cityName}
-          onSetLocation={onSetCity}
-        />
+        <LocationsTabs/>
         <div className='cities'>
           <div className='cities__places-container container'>
             <section className='cities__places places'>
