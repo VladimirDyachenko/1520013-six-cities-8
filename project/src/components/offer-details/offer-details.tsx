@@ -3,6 +3,7 @@ import { CommentPost } from '../../types/api-request';
 import { Comment } from '../../types/comment';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { floor } from '../../utils/function';
 import Map from '../map/map';
 import ReviewList from '../review-list/review-list';
 
@@ -12,13 +13,21 @@ type OfferDetailsProps = {
   nearOffers: Offer[],
   isAuthorized: boolean;
   addCommentHandler: (comment: CommentPost) => void;
+  onToggleFavorite: (id: number, isFavorite: boolean) => void;
 }
 
-function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler }: OfferDetailsProps): JSX.Element {
+function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler, onToggleFavorite }: OfferDetailsProps): JSX.Element {
+  const favoriteClassName = offer.isFavorite ? 'property__bookmark-button--active' : '';
   const [images, setImages] = useState<Array<string>>([]);
+  const [offersToDrawOnMap, setOffersToDrawOnMap] = useState<Offer[]>([]);
+
   useMemo(() => {
     setImages(offer.images.slice(0, Math.min(offer.images.length, 6)));
   }, [offer]);
+
+  useMemo(() => {
+    setOffersToDrawOnMap([...nearOffers, offer]);
+  }, [offer, nearOffers]);
 
   return (
     <section className='property'>
@@ -43,7 +52,11 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
             <h1 className='property__name'>
               {offer.title}
             </h1>
-            <button className='property__bookmark-button button' type='button'>
+            <button
+              className={`property__bookmark-button ${favoriteClassName} button`}
+              type='button'
+              onClick={(() => onToggleFavorite(offer.id, !offer.isFavorite))}
+            >
               <svg className='property__bookmark-icon' width='31' height='33'>
                 <use xlinkHref='#icon-bookmark'></use>
               </svg>
@@ -52,10 +65,10 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           </div>
           <div className='property__rating rating'>
             <div className='property__stars rating__stars'>
-              <span style={{width: '80%'}}></span>
+              <span style={{ width: `${floor(offer.rating) / 10 * 100 * 2}%` }}></span>
               <span className='visually-hidden'>Rating</span>
             </div>
-            <span className='property__rating-value rating__value'>4.8</span>
+            <span className='property__rating-value rating__value'>{offer.rating}</span>
           </div>
           <ul className='property__features'>
             <li className='property__feature property__feature--entire'>
@@ -101,7 +114,7 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           <ReviewList reviews={comments} isAuthorized={isAuthorized} addCommentHandler={addCommentHandler}/>
         </div>
       </div>
-      <Map city={offer.city.location} offers={nearOffers} activeOfferId={offer.id} className='property__map'/>
+      <Map city={offer.city.location} offers={offersToDrawOnMap} activeOfferId={offer.id} className='property__map'/>
     </section>
   );
 }

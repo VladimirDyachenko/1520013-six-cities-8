@@ -13,3 +13,9 @@ export const getOffersForCity = createSelector(
   getSelectedCity,
   (offers, city) => offers.filter((offer) => offer.city.name.toLowerCase() === city.toLowerCase()),
 );
+
+export const getNearByOffers = (state: State): Offer[] => state[NameSpace.data].nearByPlaces;
+
+export const getOfferDetails = (state: State): Offer | undefined => state[NameSpace.data].offerDetails;
+
+export const getFavoriteOffers = (state: State): Offer[] => state[NameSpace.data].favoriteOffers;

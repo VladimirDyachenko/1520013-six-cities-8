@@ -61,6 +61,7 @@ export enum APIRoute {
   Login = '/login',
   LogOut = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export const BACKEND_URL = 'https://8.react.pages.academy/six-cities';

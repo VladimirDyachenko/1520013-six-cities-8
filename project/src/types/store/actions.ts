@@ -8,17 +8,27 @@ import {
   setAuthorizationStatus,
   setUserData,
   logOut,
-  setPropertyComments
+  setPropertyComments,
+  updateOffer,
+  setOfferDetails,
+  setNearByOffers,
+  redirectToRoute,
+  setFavoriteOffers
 } from '../../store/action';
 
 export enum ActionType {
   SetCity = 'city/setCity',
   SetOffers = 'offers/setOffers',
+  UpdateOffer = 'offers/updateOne',
+  SetNearBy = 'offers/setNearBy',
+  SetOfferDetails = 'offers/setOfferDetails',
   LoadOffers = 'data/load',
   SetAuthorizationStatus = 'user/setAuthStatus',
   SetUserData = 'user/setUserData',
   LogOut = 'user/logOut',
   SetPropertyComments = 'property/comments',
+  RedirectToRoute = 'navigation/RedirectToRoute',
+  SetFavoriteOffers = 'offers/setFavoriteOffers',
 }
 
 export type Actions =
@@ -28,7 +38,12 @@ export type Actions =
   | ReturnType<typeof setAuthorizationStatus>
   | ReturnType<typeof setUserData>
   | ReturnType<typeof logOut>
-  | ReturnType<typeof setPropertyComments>;
+  | ReturnType<typeof setPropertyComments>
+  | ReturnType<typeof updateOffer>
+  | ReturnType<typeof setOfferDetails>
+  | ReturnType<typeof setNearByOffers>
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof setFavoriteOffers>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

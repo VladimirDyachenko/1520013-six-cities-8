@@ -1,7 +1,19 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toggleFavoriteStatus } from '../../store/api-action';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
+import { floor } from '../../utils/function';
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onToggleFavorite(offerId: number, isFavorite: boolean) {
+    dispatch(toggleFavoriteStatus(offerId, isFavorite));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
 
 type ApartmentCardProps = {
   offer: Offer;
@@ -9,7 +21,10 @@ type ApartmentCardProps = {
   isNearByCard?: boolean;
 }
 
-function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps): JSX.Element {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = ApartmentCardProps & PropsFromRedux;
+
+function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: ConnectedComponentProps): JSX.Element {
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const favoriteButtonClassName = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
   const articleClassName = isNearByCard ? 'near-places__card place-card' : 'cities__place-card place-card';
@@ -50,6 +65,7 @@ function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps):
           <button
             className={favoriteButtonClassName}
             type='button'
+            onClick={() => onToggleFavorite(offer.id, !offer.isFavorite)}
           >
             <svg
               className='place-card__bookmark-icon'
@@ -63,7 +79,7 @@ function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps):
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{width: `${(rating / 10 * 100) * 2}%`}}></span>
+            <span style={{width: `${(floor(rating) / 10 * 100) * 2}%`}}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
@@ -76,4 +92,5 @@ function ApartmentCard({offer, onMouseEnter, isNearByCard}: ApartmentCardProps):
   );
 }
 
-export default ApartmentCard;
+export { ApartmentCard };
+export default connector(ApartmentCard);

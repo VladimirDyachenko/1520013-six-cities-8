@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AppRoute } from '../../utils/const';
 import { State } from '../../types/store/state';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
@@ -11,6 +11,7 @@ import PrivateRoute from '../route-components/private-route/private-route';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getIsDataLoaded } from '../../store/offers-data/selectors';
+import browserHistory from '../../browser-history';
 
 const mapStateToProps = (state: State) => ({
   isDataLoaded: getIsDataLoaded(state),
@@ -27,7 +28,7 @@ function App({isDataLoaded}: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainPage/>
@@ -43,7 +44,7 @@ function App({isDataLoaded}: PropsFromRedux): JSX.Element {
         <PrivateRoute
           path={AppRoute.Favorites}
           exact
-          render={() => <FavoritesPage offers={[]}/>}
+          render={() => <FavoritesPage/>}
         />
         <Route path="">
           <NotFoundPage/>
