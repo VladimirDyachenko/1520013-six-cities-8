@@ -1,48 +1,10 @@
-import { address, datatype, lorem, internet, random } from 'faker';
+import { datatype } from 'faker';
 import { loadOffers, setFavoriteOffers, setNearByOffers, setOfferDetails, setOffers, updateOffer } from '../action';
 import { offersData } from './offers-data';
 import { OffersData } from '../../types/store/state';
 import { Offer } from '../../types/offer';
-import { OfferType } from '../../types/offer-type';
+import { generateFakeOffer } from '../../utils/mocks';
 
-const makeUniqueNumberGenerator = (min = 100) => () => min++;
-
-const getUniqueNumber = makeUniqueNumberGenerator();
-
-const generateFakeOffer = (id?: number, isFavorite?: boolean): Offer => ({
-  bedrooms: datatype.number(5),
-  city: {
-    location: {
-      latitude: Number(address.latitude()),
-      longitude: Number(address.longitude()),
-      zoom: datatype.number(20),
-    },
-    name: address.cityName(),
-  },
-  description: lorem.paragraph(),
-  goods: lorem.words().split(' '),
-  host: {
-    avatarUrl: internet.avatar(),
-    id: datatype.number(),
-    isPro: datatype.boolean(),
-    name: internet.userName(),
-  },
-  id: id ? id: getUniqueNumber(),
-  images: new Array(datatype.number(10)).fill(null).map(() => internet.avatar()),
-  isFavorite: isFavorite ? isFavorite : datatype.boolean(),
-  isPremium: datatype.boolean(),
-  location: {
-    latitude: Number(address.latitude()),
-    longitude: Number(address.longitude()),
-    zoom: datatype.number(20),
-  },
-  maxAdults: datatype.number(10),
-  previewImage: random.image(),
-  price: datatype.number(),
-  rating: datatype.number(5),
-  title: lorem.slug(3),
-  type: random.objectElement(OfferType) as OfferType,
-});
 
 describe('Reducer: offersData', () => {
   it('without additional parameters should return initial state', () => {
