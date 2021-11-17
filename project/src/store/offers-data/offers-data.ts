@@ -26,12 +26,9 @@ const offersData = (state = initialState, action: Actions): OffersData => {
       const offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
       const nearByPlaces = state.nearByPlaces.map((offer) => offer.id === action.payload.id ? action.payload : offer);
       const offerDetails = state.offerDetails?.id === action.payload.id ? action.payload : state.offerDetails;
-      const favoriteOffers = state.favoriteOffers.filter((item) => {
-        if ((item.id === action.payload.id && action.payload.isFavorite) || item.id !== action.payload.id) {
-          return true;
-        }
-        return false;
-      });
+      const favoriteOffers = state.favoriteOffers
+        .map((offer) => offer.id === action.payload.id ? action.payload : offer)
+        .filter((offer) => offer.isFavorite);
 
       return {
         ...state,
