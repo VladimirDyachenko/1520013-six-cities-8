@@ -53,7 +53,7 @@ function Map({city, offers, activeOfferId, className}: MapProps): JSX.Element {
   }, [map, offers, activeOfferId, markerLayer]);
 
   return (
-    <section className={`${className ? `${className}` : 'cities__map'} map`} ref={mapRef}></section>
+    <section className={`${className ? className : 'cities__map'} map`} ref={mapRef}></section>
   );
 }
 
