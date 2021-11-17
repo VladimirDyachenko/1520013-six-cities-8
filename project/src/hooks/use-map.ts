@@ -36,6 +36,18 @@ function useMap (
     }
   }, [mapRef, map, mapCenter]);
 
+  useEffect(() => {
+    if (map !== null) {
+      map.flyTo(
+        {
+          lat: mapCenter.latitude,
+          lng: mapCenter.longitude,
+        },
+        mapCenter.zoom,
+      );
+    }
+  }, [map, mapCenter]);
+
   return [map, markerLayer];
 }
 
