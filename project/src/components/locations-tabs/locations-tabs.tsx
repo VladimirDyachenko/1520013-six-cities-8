@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setCity } from '../../store/action';
 import { getSelectedCity } from '../../store/offers-list/selectors';
 import { Actions } from '../../types/store/actions';
@@ -36,13 +37,13 @@ function LocationsTabs(props: ConnectedComponentProps): JSX.Element {
         <ul className='locations__list tabs__list'>
           {availableCities.map((location) => (
             <li className='locations__item' key={location}>
-              <a
+              <Link
                 className={location.toLowerCase() === selectedCity.toLowerCase() ? activeLocationClassList : locationClassList}
+                to={`#${location}`}
                 onClick={() => onSetCity(location)}
-                href='#temp'
               >
                 <span>{location}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
