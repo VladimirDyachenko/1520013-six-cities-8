@@ -27,7 +27,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<number>();
   const [selectedSort, setSelectedSort] = useState(offersSortOptions[0]);
   const filteredOffers = useMemo(
-    () => offers.sort(selectedSort.sortFunction),
+    () => [...offers].sort(selectedSort.sortFunction),
     [offers, selectedSort],
   );
 
