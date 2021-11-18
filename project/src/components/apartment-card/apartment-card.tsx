@@ -44,7 +44,7 @@ function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: 
         </div>
         : ''}
       <div className={imageWrapperClassName}>
-        <Link to={`${AppRoute.Room}/${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`} data-testid="to-offer-id-link">
           <img
             className='place-card__image'
             src={previewImage}
@@ -84,7 +84,7 @@ function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: 
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link to={`${AppRoute.Room}/${id}`} data-testid="to-offer-id-link">{title}</Link>
         </h2>
         <p className='place-card__type'>{HumaneFriendlyOfferType[type]}</p>
       </div>
