@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toggleFavoriteStatus } from '../../store/api-action';
+import { toggleFavoriteStatusAction } from '../../store/api-action';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
@@ -13,7 +13,7 @@ type FavoritesCardProps = {
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onToggleFavorite(offerId: number, isFavorite: boolean) {
-    dispatch(toggleFavoriteStatus(offerId, isFavorite));
+    dispatch(toggleFavoriteStatusAction(offerId, isFavorite));
   },
 });
 
