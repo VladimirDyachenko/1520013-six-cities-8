@@ -20,7 +20,12 @@ function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): J
   return (
     <form className='places__sorting' action='#' method='get'>
       <span className='places__sorting-caption'>Sort by&nbsp;</span>
-      <span className='places__sorting-type' tabIndex={0} onClick={() => setIsOpen((state) =>!state)} data-testid="current-sort">
+      <span
+        className='places__sorting-type'
+        tabIndex={0}
+        onClick={() => setIsOpen((state) =>!state)}
+        data-testid="current-sort"
+      >
         {selectedOption.name}
         <svg className='places__sorting-arrow' width='7' height='4'>
           <use xlinkHref='#icon-arrow-select'></use>
