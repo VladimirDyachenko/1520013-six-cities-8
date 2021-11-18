@@ -55,6 +55,7 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
             <button
               className={`property__bookmark-button ${favoriteClassName} button`}
               type='button'
+              data-testid="favorite-button"
               onClick={(() => onToggleFavorite(offer.id, !offer.isFavorite))}
             >
               <svg className='property__bookmark-icon' width='31' height='33'>
