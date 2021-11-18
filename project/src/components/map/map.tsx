@@ -53,6 +53,7 @@ function Map({city, offers, activeOfferId, className}: MapProps): JSX.Element {
   }, [map, offers, activeOfferId, markerLayer]);
 
   return (
+    //TODO убрать тернарный оператор
     <section className={`${className ? className : 'cities__map'} map`} ref={mapRef}></section>
   );
 }
