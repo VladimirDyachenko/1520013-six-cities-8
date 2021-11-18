@@ -8,6 +8,19 @@ function useMap (
 ): [ Map | null, LayerGroup | null] {
   const [map, setMap] = useState<Map | null>(null);
   const [markerLayer, setMarkerLayer] = useState<LayerGroup | null>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const mediaQueryChangeHandler = (event: MediaQueryListEvent) => setPrefersReducedMotion(!event.matches);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if(mediaQuery) {
+      setPrefersReducedMotion(!mediaQuery.matches);
+      mediaQuery.addEventListener('change', mediaQueryChangeHandler);
+
+      return () => mediaQuery.removeEventListener('change', mediaQueryChangeHandler);
+    }
+  }, []);
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
@@ -44,9 +57,12 @@ function useMap (
           lng: mapCenter.longitude,
         },
         mapCenter.zoom,
+        {
+          animate: prefersReducedMotion,
+        },
       );
     }
-  }, [map, mapCenter]);
+  }, [map, mapCenter, prefersReducedMotion]);
 
   return [map, markerLayer];
 }
