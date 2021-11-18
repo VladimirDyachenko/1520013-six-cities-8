@@ -45,6 +45,7 @@ function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
         name='review'
         placeholder='Tell how was your stay, what you like and what can be improved'
         value={comment}
+        data-testid='review-textarea'
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setComment(event.target.value)}
       >
       </textarea>
@@ -56,6 +57,7 @@ function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
           className='reviews__submit form__submit button'
           type='submit'
           disabled={isFormInvalid}
+          data-testid="submit-button"
         >
           Submit
         </button>
