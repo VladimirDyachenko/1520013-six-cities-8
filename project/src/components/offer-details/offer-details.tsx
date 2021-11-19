@@ -114,7 +114,12 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           <ReviewList reviews={comments} isAuthorized={isAuthorized} addCommentHandler={addCommentHandler}/>
         </div>
       </div>
-      <Map city={offer.city.location} offers={offersToDrawOnMap} activeOfferId={offer.id} className='property__map'/>
+      <Map
+        city={{...offer.location, zoom: offer.city.location.zoom}}
+        offers={offersToDrawOnMap}
+        activeOfferId={offer.id}
+        className='property__map'
+      />
     </section>
   );
 }
