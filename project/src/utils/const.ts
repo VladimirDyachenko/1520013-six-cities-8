@@ -26,8 +26,6 @@ export const selectedMapIcon = {
   iconAnchor: [13.5, 39],
 };
 
-export const INITIAL_CITY_NAME = 'Paris';
-
 export enum AvailableCity {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -36,6 +34,8 @@ export enum AvailableCity {
   Hamburg = 'Hamburg',
   Dusseldorf = 'Dusseldorf',
 }
+
+export const INITIAL_CITY_NAME = AvailableCity.Paris;
 
 export const offersSortOptions: IOfferSortOption[] = [
   {
@@ -71,3 +71,9 @@ export enum HttpCode {
   Unauthorized = 401,
   NotFound = 404,
 }
+
+//https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+export const emailRegExp = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/);
+
+//1 цифра и 1 буква латинского алфавита
+export const passwordRegExp = new RegExp(/([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*/, 'g');

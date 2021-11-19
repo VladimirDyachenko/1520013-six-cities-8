@@ -5,7 +5,7 @@ import { setCity } from '../../../store/action';
 import { loginAction } from '../../../store/api-action';
 import { UserLogin } from '../../../types/api-response';
 import { ThunkAppDispatch } from '../../../types/store/actions';
-import { AppRoute, AvailableCity } from '../../../utils/const';
+import { AppRoute, AvailableCity, emailRegExp, passwordRegExp } from '../../../utils/const';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: UserLogin) {
@@ -31,8 +31,19 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
     onSubmit({ email, password });
   };
 
+  const [randomCity, setRandomCity] = useState<AvailableCity>(AvailableCity.Amsterdam);
+
   useEffect(() => {
-    const isFormValid = password.length < 1 || email.length < 1;
+    const cities = Object.values(AvailableCity);
+
+    setRandomCity(cities[Math.floor(Math.random() * cities.length)]);
+  }, []);
+
+  useEffect(() => {
+    const isEmailValid = emailRegExp.test(email);
+    const isPasswordValid = passwordRegExp.test(password);
+    const isFormValid = !isPasswordValid || !isEmailValid;
+
     setIsFormInvalid(isFormValid);
   }, [password, email]);
 
@@ -100,11 +111,11 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link
-                to={`${AppRoute.Main}#${AvailableCity.Amsterdam}`}
-                onClick={() => onSetCity(AvailableCity.Amsterdam)} className="locations__item-link"
+                to={`${AppRoute.Main}#${randomCity}`}
+                onClick={() => onSetCity(randomCity)} className="locations__item-link"
                 data-testid="link-to-main-page"
               >
-                <span>Amsterdam</span>
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>
