@@ -14,12 +14,12 @@ const store = mockStore({
   USER: {authorizationStatus: AuthorizationStatus.NoAuth},
 });
 
-describe('Component: FavoritesCard', () => {
+describe('Component: FavoritesPage', () => {
   beforeEach(() => {
     history.push('test-page');
   });
 
-  it('should render FavoritesCard correctly', () => {
+  it('should render FavoritesPage correctly', () => {
     const fakeOffers: Offer[] = [];
     const loadData = jest.fn();
 
@@ -31,7 +31,7 @@ describe('Component: FavoritesCard', () => {
       </Router>,
     );
 
-    expect(screen.getByText('Saved listing')).toBeInTheDocument();
+    expect(screen.getByTestId('favorites-page')).toBeInTheDocument();
     expect(loadData).toBeCalledTimes(1);
   });
 
