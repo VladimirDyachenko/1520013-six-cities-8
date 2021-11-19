@@ -64,15 +64,22 @@ export const loadPropertyCommentsAction = (offerId: number): ThunkActionResult =
     }
   };
 
-export const addPropertyCommentsAction = (offerId: number, comment: CommentPost): ThunkActionResult =>
+export const addPropertyCommentsAction = (
+  offerId: number,
+  comment: CommentPost,
+  onSuccess: () => void,
+  onError: () => void,
+): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
       const { data } = await api.post<CommentGetRes[] | undefined>(`${APIRoute.Comments}/${offerId}`, comment);
       if (data) {
         const comments = data.map(APIAdapter.commentToClient);
         dispatch(setPropertyComments(comments));
+        onSuccess();
       }
     } catch (error: unknown) {
+      onError();
       if (axios.isAxiosError(error)) {
         if (error.response?.status === HttpCode.Unauthorized) {
           dispatch(redirectToRoute(AppRoute.SignIn));

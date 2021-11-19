@@ -11,7 +11,7 @@ type OfferDetailsProps = {
   comments: Comment[],
   nearOffers: Offer[],
   isAuthorized: boolean;
-  addCommentHandler: (comment: CommentPost) => void;
+  addCommentHandler: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
   onToggleFavorite: (id: number, isFavorite: boolean) => void;
 }
 

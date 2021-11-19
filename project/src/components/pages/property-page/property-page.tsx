@@ -26,8 +26,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  addPropertyComment(offerId: number, comment: CommentPost) {
-    dispatch(addPropertyCommentsAction(offerId, comment));
+  addPropertyComment(offerId: number, comment: CommentPost, onSuccess: () => void, onError: () => void) {
+    dispatch(addPropertyCommentsAction(offerId, comment, onSuccess, onError));
   },
   loadData(offerId: number) {
     dispatch(loadPropertyCommentsAction(offerId));
@@ -62,8 +62,8 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
   } = props;
   const params = useParams<RouterParams>();
 
-  const addCommentHandler = useCallback((comment: CommentPost) => {
-    addPropertyComment(Number(params.id), comment);
+  const addCommentHandler = useCallback((comment: CommentPost, onSuccess, onError) => {
+    addPropertyComment(Number(params.id), comment, onSuccess, onError);
   }, [params.id, addPropertyComment]);
 
   useEffect(() => {

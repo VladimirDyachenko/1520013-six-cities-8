@@ -148,30 +148,38 @@ describe('test async actions', () => {
   it('addPropertyCommentsAction: should update property comments when server respond with 200', async () => {
     const store = mockStore();
     const offerId = 102;
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
     mockAPI.onPost(`${APIRoute.Comments}/${offerId}`).reply(200, []);
 
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(addPropertyCommentsAction(offerId, {comment: 'sad', rating: 5}));
+    await store.dispatch(addPropertyCommentsAction(offerId, {comment: 'sad', rating: 5}, onSuccess, onError));
 
     expect(store.getActions()).toEqual([
       setPropertyComments([]),
     ]);
+    expect(onSuccess).toBeCalledTimes(1);
+    expect(onError).not.toBeCalledTimes(1);
   });
 
   it(`addPropertyCommentsAction: should redirect to ${AppRoute.SignIn} when server respond with 401`, async () => {
     const store = mockStore();
     const offerId = 102;
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
     mockAPI.onPost(`${APIRoute.Comments}/${offerId}`).reply(401, []);
 
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(addPropertyCommentsAction(offerId, {comment: 'sad', rating: 5}));
+    await store.dispatch(addPropertyCommentsAction(offerId, {comment: 'sad', rating: 5}, onSuccess, onError));
 
     expect(store.getActions()).toEqual([
       redirectToRoute(AppRoute.SignIn),
     ]);
     expect(onFakeUnauthorized).toBeCalled();
+    expect(onSuccess).not.toBeCalledTimes(1);
+    expect(onError).toBeCalledTimes(1);
   });
 
   it('toggleFavoriteStatus: should update offers when server respond with 200', async () => {
