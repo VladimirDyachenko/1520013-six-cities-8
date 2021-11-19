@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { LayerGroup, Map } from 'leaflet';
 import useMap from './use-map';
 
-describe('Hook: useUserAnswers', () => {
+describe('Hook: useMap', () => {
 
   it('should return Map and LayerGroup', () => {
     const mockElement = document.createElement('div');

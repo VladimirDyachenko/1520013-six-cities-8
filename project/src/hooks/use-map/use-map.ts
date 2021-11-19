@@ -1,6 +1,7 @@
 import { MutableRefObject, useEffect, useState } from 'react';
-import { GeoLocation } from '../types/geo-location';
+import { GeoLocation } from '../../types/geo-location';
 import { Map, TileLayer, LayerGroup } from 'leaflet';
+import usePrefersReducedMotion from '../use-prefers-reduced-motion/use-prefers-reduced-motion';
 
 function useMap (
   mapRef: MutableRefObject<HTMLElement | null>,
@@ -8,21 +9,7 @@ function useMap (
 ): [ Map | null, LayerGroup | null] {
   const [map, setMap] = useState<Map | null>(null);
   const [markerLayer, setMarkerLayer] = useState<LayerGroup | null>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const mediaQueryChangeHandler = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
-
-  useEffect(() => {
-    // без этой проверки тест падает в ошибку
-    if (typeof window.matchMedia === 'function') {
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if(mediaQuery) {
-        setPrefersReducedMotion(!mediaQuery.matches);
-        mediaQuery.addEventListener('change', mediaQueryChangeHandler);
-
-        return () => mediaQuery.removeEventListener('change', mediaQueryChangeHandler);
-      }
-    }
-  }, []);
+  const [prefersReducedMotion] = usePrefersReducedMotion();
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {

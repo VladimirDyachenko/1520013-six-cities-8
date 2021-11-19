@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import useMap from '../../hooks/use-map';
+import useMap from '../../hooks/use-map/use-map';
 import { GeoLocation } from '../../types/geo-location';
 import { Offer } from '../../types/offer';
 import { Marker, Icon, PointExpression } from 'leaflet';
