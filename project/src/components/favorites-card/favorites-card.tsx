@@ -5,7 +5,7 @@ import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
-import { floor } from '../../utils/function';
+import { floorRating } from '../../utils/function';
 
 type FavoritesCardProps = {
   offer: Offer
@@ -57,7 +57,7 @@ function FavoritesCard({offer, onToggleFavorite}: ConnectedComponentProps): JSX.
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${floor(rating) / 10 * 100 * 2}%` }}></span>
+            <span style={{ width: `${floorRating(rating) / 10 * 100 * 2}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
