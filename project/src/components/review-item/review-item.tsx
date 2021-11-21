@@ -16,6 +16,7 @@ function ReviewItem({ review }: ReviewItemProps): JSX.Element {
             width='54'
             height='54'
             alt='Reviews avatar'
+            data-testid="avatar-img"
           />
         </div>
         <span className='reviews__user-name'>{review.user.name}</span>
@@ -28,7 +29,7 @@ function ReviewItem({ review }: ReviewItemProps): JSX.Element {
           </div>
         </div>
         <p className='reviews__text'>{review.comment}</p>
-        <time className='reviews__time' dateTime={review.date}>
+        <time className='reviews__time' dateTime={review.date} data-testid="review-time">
           {date.toLocaleString('en-us', {month: 'long', year: 'numeric'})}
         </time>
       </div>

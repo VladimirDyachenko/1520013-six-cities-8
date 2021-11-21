@@ -27,7 +27,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState<number>();
   const [selectedSort, setSelectedSort] = useState(offersSortOptions[0]);
   const filteredOffers = useMemo(
-    () => offers.sort(selectedSort.sortFunction),
+    () => [...offers].sort(selectedSort.sortFunction),
     [offers, selectedSort],
   );
 
@@ -59,13 +59,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
                   <Map
                     activeOfferId={activeOfferId}
                     offers={filteredOffers}
-                    city={
-                      {
-                        latitude: 52.3909553943508,
-                        longitude: 4.85309666406198,
-                        zoom: 10,
-                      }
-                    }
+                    city={offers[0].city.location}
                   />
                 </div>
               </div>

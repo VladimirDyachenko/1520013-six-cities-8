@@ -31,13 +31,9 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
     onSubmit({ email, password });
   };
 
-  //TODO сделать нормальную валидацию
   useEffect(() => {
-    if ((password.length < 1) || email.length < 1) {
-      setIsFormInvalid(true);
-    } else {
-      setIsFormInvalid(false);
-    }
+    const isFormValid = password.length < 1 || email.length < 1;
+    setIsFormInvalid(isFormValid);
   }, [password, email]);
 
   return (
@@ -46,7 +42,11 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to={AppRoute.Main} className="header__logo-link">
+              <Link
+                to={AppRoute.Main}
+                className="header__logo-link"
+                data-testid="logo-link"
+              >
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
@@ -70,6 +70,7 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
                   placeholder="Email"
                   autoComplete="email"
                   required
+                  data-testid="email-input"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -83,12 +84,14 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
                   placeholder="Password"
                   autoComplete="current-password"
                   required
+                  data-testid="password-input"
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
                 disabled={isFormInvalid}
+                data-testid="sign-in-button"
               >
                 Sign in
               </button>
@@ -96,7 +99,11 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link to={AppRoute.Main} onClick={() => onSetCity(AvailableCity.Amsterdam)} className="locations__item-link">
+              <Link
+                to={`${AppRoute.Main}#${AvailableCity.Amsterdam}`}
+                onClick={() => onSetCity(AvailableCity.Amsterdam)} className="locations__item-link"
+                data-testid="link-to-main-page"
+              >
                 <span>Amsterdam</span>
               </Link>
             </div>

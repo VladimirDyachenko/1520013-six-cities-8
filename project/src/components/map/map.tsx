@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map/use-map';
 import { GeoLocation } from '../../types/geo-location';
 import { Offer } from '../../types/offer';
 import { Marker, Icon, PointExpression } from 'leaflet';
@@ -53,7 +53,8 @@ function Map({city, offers, activeOfferId, className}: MapProps): JSX.Element {
   }, [map, offers, activeOfferId, markerLayer]);
 
   return (
-    <section className={`${className ? `${className}` : 'cities__map'} map`} ref={mapRef}></section>
+    //TODO убрать тернарный оператор
+    <section className={`${className ? className : 'cities__map'} map`} ref={mapRef}></section>
   );
 }
 

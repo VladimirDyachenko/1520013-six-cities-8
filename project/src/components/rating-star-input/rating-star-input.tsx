@@ -17,6 +17,7 @@ function RatingStarInput({value, selectedValue, label, onChange}: RatingStarInpu
         type='radio'
         checked={selectedValue === value}
         onChange={() => onChange(value)}
+        data-testid={`star-input-${value}`}
       />
       <label
         htmlFor={`${value}-stars`}

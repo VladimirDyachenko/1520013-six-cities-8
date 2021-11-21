@@ -6,7 +6,7 @@ import Header from '../../header/header';
 import { State } from '../../../types/store/state';
 import { ThunkAppDispatch } from '../../../types/store/actions';
 import { CommentPost } from '../../../types/api-request';
-import { addPropertyCommentsAction, loadNearByAction, loadOfferDetailsAction, loadPropertyCommentsAction, toggleFavoriteStatus } from '../../../store/api-action';
+import { addPropertyCommentsAction, loadNearByAction, loadOfferDetailsAction, loadPropertyCommentsAction, toggleFavoriteStatusAction } from '../../../store/api-action';
 import { connect, ConnectedProps } from 'react-redux';
 import { getIsAuthorized } from '../../../store/user-data/selectors';
 import { getPropertyComments } from '../../../store/property-comments/selectors';
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
     dispatch(setNearByOffers([]));
   },
   onToggleFavorite(offerId: number, isFavorite: boolean) {
-    dispatch(toggleFavoriteStatus(offerId, isFavorite));
+    dispatch(toggleFavoriteStatusAction(offerId, isFavorite));
   },
 });
 

@@ -1,6 +1,7 @@
 import { MutableRefObject, useEffect, useState } from 'react';
-import { GeoLocation } from '../types/geo-location';
+import { GeoLocation } from '../../types/geo-location';
 import { Map, TileLayer, LayerGroup } from 'leaflet';
+import usePrefersReducedMotion from '../use-prefers-reduced-motion/use-prefers-reduced-motion';
 
 function useMap (
   mapRef: MutableRefObject<HTMLElement | null>,
@@ -8,6 +9,7 @@ function useMap (
 ): [ Map | null, LayerGroup | null] {
   const [map, setMap] = useState<Map | null>(null);
   const [markerLayer, setMarkerLayer] = useState<LayerGroup | null>(null);
+  const [prefersReducedMotion] = usePrefersReducedMotion();
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
@@ -35,6 +37,21 @@ function useMap (
       setMap(instance);
     }
   }, [mapRef, map, mapCenter]);
+
+  useEffect(() => {
+    if (map !== null) {
+      map.flyTo(
+        {
+          lat: mapCenter.latitude,
+          lng: mapCenter.longitude,
+        },
+        mapCenter.zoom,
+        {
+          animate: !prefersReducedMotion,
+        },
+      );
+    }
+  }, [map, mapCenter, prefersReducedMotion]);
 
   return [map, markerLayer];
 }

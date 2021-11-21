@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toggleFavoriteStatus } from '../../store/api-action';
+import { toggleFavoriteStatusAction } from '../../store/api-action';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
@@ -13,7 +13,7 @@ type FavoritesCardProps = {
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onToggleFavorite(offerId: number, isFavorite: boolean) {
-    dispatch(toggleFavoriteStatus(offerId, isFavorite));
+    dispatch(toggleFavoriteStatusAction(offerId, isFavorite));
   },
 });
 
@@ -28,7 +28,7 @@ function FavoritesCard({offer, onToggleFavorite}: ConnectedComponentProps): JSX.
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Room}/${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`} data-testid='link-to-offer-image'>
           <img
             className="place-card__image"
             src={previewImage}
@@ -62,7 +62,12 @@ function FavoritesCard({offer, onToggleFavorite}: ConnectedComponentProps): JSX.
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link
+            to={`${AppRoute.Room}/${id}`}
+            data-testid="link-to-offer-image-title"
+          >
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{HumaneFriendlyOfferType[type]}</p>
       </div>

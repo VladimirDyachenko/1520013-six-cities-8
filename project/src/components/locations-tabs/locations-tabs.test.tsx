@@ -3,6 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { LocationsTabs } from './locations-tabs';
 import { AvailableCity } from '../../utils/const';
+import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
 describe('Component: LocationsTabs', () => {
@@ -21,6 +22,24 @@ describe('Component: LocationsTabs', () => {
 
     expect(screen.getByText(AvailableCity.Amsterdam)).toBeInTheDocument();
     expect(screen.getAllByRole('link').length).toBe(cityNames.length);
+  });
+
+  it('should call "onSetCity" with city name and set anchor', () => {
+    const cityNames = Object.values(AvailableCity);
+    const onSetCity = jest.fn();
+
+    render(
+      <Router history={history}>
+        <LocationsTabs selectedCity={AvailableCity.Amsterdam} onSetCity={onSetCity}/>
+      </Router>,
+    );
+
+    expect(screen.getByText(AvailableCity.Amsterdam)).toBeInTheDocument();
+
+    const links = screen.getAllByRole('link');
+    userEvent.click(links[1]);
+    expect(onSetCity).toBeCalledWith(cityNames[1]);
+    expect(history.location.hash).toBe(`#${cityNames[1]}`);
   });
 
 });

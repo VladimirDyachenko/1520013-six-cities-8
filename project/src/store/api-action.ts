@@ -81,7 +81,7 @@ export const addPropertyCommentsAction = (offerId: number, comment: CommentPost)
     }
   };
 
-export const toggleFavoriteStatus = (offerId: number, isFavorite: boolean): ThunkActionResult =>
+export const toggleFavoriteStatusAction = (offerId: number, isFavorite: boolean): ThunkActionResult =>
   async (dispatch, _getState, api) => {
 
     const newFavoriteStatus = isFavorite ? 1 : 0;
