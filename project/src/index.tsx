@@ -14,6 +14,8 @@ import { rootReducer } from './store/root-reducer';
 import { redirect } from './store/middlewares/redirect';
 import { Router as BrowserRouter } from 'react-router-dom';
 import browserHistory from './browser-history';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const api = createAPI(() => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth)));
 
@@ -31,6 +33,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <BrowserRouter history={browserHistory}>
         <App/>
       </BrowserRouter>

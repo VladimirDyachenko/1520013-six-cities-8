@@ -35,7 +35,7 @@ import { APIAdapter } from '../utils/adapter';
 
 describe('test async actions', () => {
   const onFakeUnauthorized = jest.fn();
-  const api = createAPI(onFakeUnauthorized);
+  const api = createAPI(onFakeUnauthorized, false);
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
   const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
