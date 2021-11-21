@@ -3,7 +3,6 @@ import { CommentPost } from '../../types/api-request';
 import { Comment } from '../../types/comment';
 import { Offer } from '../../types/offer';
 import { HumaneFriendlyOfferType } from '../../types/offer-type';
-import { floor } from '../../utils/function';
 import Map from '../map/map';
 import ReviewList from '../review-list/review-list';
 
@@ -12,7 +11,7 @@ type OfferDetailsProps = {
   comments: Comment[],
   nearOffers: Offer[],
   isAuthorized: boolean;
-  addCommentHandler: (comment: CommentPost) => void;
+  addCommentHandler: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
   onToggleFavorite: (id: number, isFavorite: boolean) => void;
 }
 
@@ -66,7 +65,7 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           </div>
           <div className='property__rating rating'>
             <div className='property__stars rating__stars'>
-              <span style={{ width: `${floor(offer.rating) / 10 * 100 * 2}%` }}></span>
+              <span style={{ width: `${offer.rating / 10 * 100 * 2}%` }}></span>
               <span className='visually-hidden'>Rating</span>
             </div>
             <span className='property__rating-value rating__value'>{offer.rating}</span>
@@ -115,7 +114,12 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           <ReviewList reviews={comments} isAuthorized={isAuthorized} addCommentHandler={addCommentHandler}/>
         </div>
       </div>
-      <Map city={offer.city.location} offers={offersToDrawOnMap} activeOfferId={offer.id} className='property__map'/>
+      <Map
+        city={{...offer.location, zoom: offer.city.location.zoom}}
+        offers={offersToDrawOnMap}
+        activeOfferId={offer.id}
+        className='property__map'
+      />
     </section>
   );
 }

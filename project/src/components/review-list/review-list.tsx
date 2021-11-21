@@ -6,7 +6,7 @@ import ReviewItem from '../review-item/review-item';
 type ReviewListProps = {
   reviews: Array<Comment>
   isAuthorized: boolean;
-  addCommentHandler: (comment: CommentPost) => void;
+  addCommentHandler: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
 }
 
 function ReviewList({reviews, isAuthorized, addCommentHandler}: ReviewListProps): JSX.Element {

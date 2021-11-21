@@ -49,7 +49,7 @@ describe('Component: AddReview', () => {
 
   it('should call addCommentHandler callback', () => {
     const addCommentHandler = jest.fn();
-    const commentText = ''.padEnd(50);
+    const commentText = ''.padEnd(50, 'c');
 
     render(<AddReview addCommentHandler={addCommentHandler}/>);
 
@@ -59,9 +59,12 @@ describe('Component: AddReview', () => {
 
     userEvent.click(screen.getByTestId('submit-button'));
     expect(addCommentHandler).toBeCalledTimes(1);
-    expect(addCommentHandler).toBeCalledWith({
-      comment: commentText,
-      rating: 1,
-    });
+    //Первый вызов, первый аргумент
+    expect(addCommentHandler.mock.calls[0][0]).toEqual(
+      {
+        comment: commentText,
+        rating: 1,
+      },
+    );
   });
 });

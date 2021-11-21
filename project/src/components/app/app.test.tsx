@@ -117,7 +117,7 @@ describe('App routing', () => {
       </Provider>,
     );
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Saved listing');
+    expect(screen.getByTestId('favorites-page')).toBeInTheDocument();
   });
 
 });
