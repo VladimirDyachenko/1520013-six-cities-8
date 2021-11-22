@@ -29,14 +29,14 @@ function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: 
   const articleClassName = isNearByCard ? 'near-places__card place-card' : 'cities__place-card place-card';
   const imageWrapperClassName = isNearByCard ? 'near-places__image-wrapper place-card__image-wrapper' : 'cities__image-wrapper place-card__image-wrapper';
 
-  const mouseEnterHandler = () => {
+  const handleMouseEnter = () => {
     if (onMouseEnter !== undefined) {
       onMouseEnter(id);
     }
   };
 
   return (
-    <article className={articleClassName} onMouseEnter={mouseEnterHandler}>
+    <article className={articleClassName} onMouseEnter={handleMouseEnter}>
       {isPremium ?
         <div className='place-card__mark'>
           <span>Premium</span>

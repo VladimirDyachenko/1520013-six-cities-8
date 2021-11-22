@@ -25,7 +25,7 @@ function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
     setIsSubmitting(false);
   }, []);
 
-  const onFormSubmit = (event: FormEvent) => {
+  const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     if(!isFormInvalid) {
@@ -42,7 +42,7 @@ function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
   };
 
   return (
-    <form onSubmit={onFormSubmit} className='reviews__form form' action='#' method='post'>
+    <form onSubmit={handleFormSubmit} className='reviews__form form' action='#' method='post'>
       <fieldset disabled={isSubmitting} style={{border: 'none', padding: '0', margin: '0'}}>
         <label className='reviews__label form__label' htmlFor='review'>
           Your review
