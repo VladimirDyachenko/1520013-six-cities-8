@@ -2,10 +2,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toggleFavoriteStatusAction } from '../../store/api-action';
 import { Offer } from '../../types/offer';
-import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
-import { floorRating } from '../../utils/function';
+import { floorRating, getHumaneFriendlyOfferType } from '../../utils/function';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onToggleFavorite(offerId: number, isFavorite: boolean) {
@@ -86,7 +85,7 @@ function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: 
         <h2 className='place-card__name'>
           <Link to={`${AppRoute.Room}/${id}`} data-testid="to-offer-id-link">{title}</Link>
         </h2>
-        <p className='place-card__type'>{HumaneFriendlyOfferType[type]}</p>
+        <p className='place-card__type'>{getHumaneFriendlyOfferType(type)}</p>
       </div>
     </article>
   );

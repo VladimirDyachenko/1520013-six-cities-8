@@ -3,7 +3,7 @@ import { Comment } from '../../types/comment';
 import { State } from '../../types/store/state';
 import { NameSpace } from '../root-reducer';
 
-export const getAllPropertyComments = (state: State): Comment[] => state[NameSpace.comments].propertyComments;
+export const getAllPropertyComments = (state: State): Comment[] => state[NameSpace.Comments].propertyComments;
 
 const getLimit = (_: State, limit = 10) => limit;
 

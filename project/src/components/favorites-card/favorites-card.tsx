@@ -2,10 +2,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toggleFavoriteStatusAction } from '../../store/api-action';
 import { Offer } from '../../types/offer';
-import { HumaneFriendlyOfferType } from '../../types/offer-type';
 import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
-import { floorRating } from '../../utils/function';
+import { floorRating, getHumaneFriendlyOfferType } from '../../utils/function';
 
 type FavoritesCardProps = {
   offer: Offer
@@ -69,7 +68,7 @@ function FavoritesCard({offer, onToggleFavorite}: ConnectedComponentProps): JSX.
             {title}
           </Link>
         </h2>
-        <p className="place-card__type">{HumaneFriendlyOfferType[type]}</p>
+        <p className="place-card__type">{getHumaneFriendlyOfferType(type)}</p>
       </div>
     </article>
   );

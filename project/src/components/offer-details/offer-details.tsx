@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { CommentPost } from '../../types/api-request';
 import { Comment } from '../../types/comment';
 import { Offer } from '../../types/offer';
-import { HumaneFriendlyOfferType } from '../../types/offer-type';
+import { getHumaneFriendlyOfferType } from '../../utils/function';
 import Map from '../map/map';
 import ReviewList from '../review-list/review-list';
 
@@ -72,7 +72,7 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
           </div>
           <ul className='property__features'>
             <li className='property__feature property__feature--entire'>
-              {HumaneFriendlyOfferType[offer.type]}
+              {getHumaneFriendlyOfferType(offer.type)}
             </li>
             <li className='property__feature property__feature--bedrooms'>
               {offer.bedrooms} Bedrooms

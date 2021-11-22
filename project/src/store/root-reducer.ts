@@ -5,17 +5,17 @@ import { propertyComments } from './property-comments/property-comments';
 import { userData } from './user-data/user-data';
 
 export enum NameSpace {
-  comments = 'PROPERTY_COMMENTS',
-  data = 'OFFERS',
-  offerList = 'OFFER_LIST',
-  user = 'USER',
+  Comments = 'PROPERTY_COMMENTS',
+  Data = 'OFFERS',
+  OfferList = 'OFFER_LIST',
+  User = 'USER',
 }
 
 export const rootReducer = combineReducers({
-  [NameSpace.comments]: propertyComments,
-  [NameSpace.data]: offersData,
-  [NameSpace.offerList]: offersList,
-  [NameSpace.user]: userData,
+  [NameSpace.Comments]: propertyComments,
+  [NameSpace.Data]: offersData,
+  [NameSpace.OfferList]: offersList,
+  [NameSpace.User]: userData,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
