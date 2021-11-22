@@ -6,11 +6,12 @@ import userEvent from '@testing-library/user-event';
 
 describe('Component: SortForm', () => {
   it('should render SortForm correctly', () => {
+    const sortOptions = offersSortOptions.map((option) => option.name);
     const selectedSortOption = offersSortOptions[datatype.number({max: offersSortOptions.length - 1})];
     render(
       <SortForm
-        sortOptions={offersSortOptions}
-        selectedOption={selectedSortOption}
+        sortOptions={sortOptions}
+        selectedOption={selectedSortOption.name}
         handleChange={jest.fn()}
       />,
     );
@@ -20,11 +21,12 @@ describe('Component: SortForm', () => {
   });
 
   it('should open options list after click', () => {
+    const sortOptions = offersSortOptions.map((option) => option.name);
     const selectedSortOption = offersSortOptions[datatype.number({max: offersSortOptions.length - 1})];
     const { baseElement } = render(
       <SortForm
-        sortOptions={offersSortOptions}
-        selectedOption={selectedSortOption}
+        sortOptions={sortOptions}
+        selectedOption={selectedSortOption.name}
         handleChange={jest.fn()}
       />,
     );
@@ -34,19 +36,20 @@ describe('Component: SortForm', () => {
   });
 
   it('should call "handleChange" callback', () => {
+    const sortOptions = offersSortOptions.map((option) => option.name);
     const selectedSortOption = offersSortOptions[datatype.number({max: offersSortOptions.length - 1})];
     const handleChange = jest.fn();
 
     render(
       <SortForm
-        sortOptions={offersSortOptions}
-        selectedOption={selectedSortOption}
+        sortOptions={sortOptions}
+        selectedOption={selectedSortOption.name}
         handleChange={handleChange}
       />,
     );
 
     userEvent.click(screen.getAllByRole('listitem')[0]);
-    expect(handleChange).toBeCalledWith(offersSortOptions[0]);
+    expect(handleChange).toBeCalledWith(offersSortOptions[0].name);
   });
 
 });

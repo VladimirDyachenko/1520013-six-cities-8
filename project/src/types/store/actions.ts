@@ -13,11 +13,13 @@ import {
   setOfferDetails,
   setNearByOffers,
   redirectToRoute,
-  setFavoriteOffers
+  setFavoriteOffers,
+  setOfferSort
 } from '../../store/action';
 
 export enum ActionType {
   SetCity = 'city/setCity',
+  SetSortName = 'city/setSortName',
   SetOffers = 'offers/setOffers',
   UpdateOffer = 'offers/updateOne',
   SetNearBy = 'offers/setNearBy',
@@ -33,6 +35,7 @@ export enum ActionType {
 
 export type Actions =
   | ReturnType<typeof setCity>
+  | ReturnType<typeof setOfferSort>
   | ReturnType<typeof setOffers>
   | ReturnType<typeof loadOffers>
   | ReturnType<typeof setAuthorizationStatus>

@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { IOfferSortOption } from '../../types/offer';
 
-//TODO Сделать этот компонент универсальным
 type SortFormProps = {
-  sortOptions: IOfferSortOption[],
-  selectedOption: IOfferSortOption,
-  handleChange: (a: IOfferSortOption) => void,
+  sortOptions: string[],
+  selectedOption: string,
+  handleChange: (a: string) => void,
 }
 
 function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const openListClassName = isOpen ? 'places__options--opened' : '';
 
-  const onOptionClick = (selected: IOfferSortOption) => {
+  const onOptionClick = (selected: string) => {
     handleChange(selected);
     setIsOpen(false);
   };
@@ -26,7 +24,7 @@ function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): J
         onClick={() => setIsOpen((state) =>!state)}
         data-testid="current-sort"
       >
-        {selectedOption.name}
+        {selectedOption}
         <svg className='places__sorting-arrow' width='7' height='4'>
           <use xlinkHref='#icon-arrow-select'></use>
         </svg>
@@ -35,12 +33,12 @@ function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): J
         {
           sortOptions.map((option) => (
             <li
-              key={option.name}
-              className={`places__option ${option.name === selectedOption.name ? 'places__option--active' : ''}`}
+              key={option}
+              className={`places__option ${option === selectedOption ? 'places__option--active' : ''}`}
               tabIndex={0}
               onClick={() => onOptionClick(option)}
             >
-              {option.name}
+              {option}
             </li>
           ))
         }

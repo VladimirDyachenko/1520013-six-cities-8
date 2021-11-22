@@ -1,12 +1,17 @@
 import { PrivateAuthInfo } from '../types/auth-info';
 import { Comment } from '../types/comment';
-import { Offer } from '../types/offer';
+import { Offer, OfferSortOptionName } from '../types/offer';
 import { ActionType } from '../types/store/actions';
 import { AppRoute, AuthorizationStatus } from '../utils/const';
 
 export const setCity = (cityName: string) => ({
   type: ActionType.SetCity,
   payload: cityName,
+} as const);
+
+export const setOfferSort = (type: OfferSortOptionName) => ({
+  type: ActionType.SetSortName,
+  payload: type,
 } as const);
 
 export const setOffers = (offers: Offer[]) => ({

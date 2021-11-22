@@ -26,7 +26,13 @@ export type City = {
   name: string;
 }
 
+export type OfferSortOptionName =
+  'Popular'
+  | 'Price: low to high'
+  | 'Price: high to low'
+  | 'Top rated first';
+
 export interface IOfferSortOption {
-  name: string;
+  name: OfferSortOptionName;
   sortFunction: (a: Offer, b: Offer) => number;
 }

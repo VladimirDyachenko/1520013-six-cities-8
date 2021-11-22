@@ -2,7 +2,7 @@ import { RootState } from '../../store/root-reducer';
 import { AuthorizationStatus } from '../../utils/const';
 import { PrivateAuthInfo } from '../auth-info';
 import { Comment } from '../comment';
-import { Offer } from '../offer';
+import { Offer, OfferSortOptionName } from '../offer';
 
 export type State = RootState
 
@@ -21,6 +21,7 @@ export type OffersData = {
 
 export type OffersList = {
   cityName: string;
+  selectedSort: OfferSortOptionName;
 };
 
 export type PropertyComments = {
