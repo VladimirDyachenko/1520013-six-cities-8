@@ -21,7 +21,7 @@ type RouterParams = {
 const mapStateToProps = (state: State) => ({
   isAuthorized: getIsAuthorized(state),
   propertyComments: getPropertyComments(state),
-  nearBy: getNearByOffers(state),
+  nearByOffersList: getNearByOffers(state),
   currentOffer: getOfferDetails(state),
 });
 
@@ -53,7 +53,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
   const {
     isAuthorized,
     propertyComments,
-    nearBy,
+    nearByOffersList,
     currentOffer,
     addPropertyComment,
     loadData,
@@ -80,7 +80,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
           <OfferDetails
             offer={currentOffer}
             comments={propertyComments}
-            nearOffers={nearBy}
+            nearOffers={nearByOffersList}
             isAuthorized={isAuthorized}
             addCommentHandler={addCommentHandler}
             onToggleFavorite={onToggleFavorite}
@@ -91,7 +91,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
           <section className='near-places places'>
             <h2 className='near-places__title'>Other places in the neighbourhood</h2>
             <div className='near-places__list places__list'>
-              {nearBy.map((offer) => <ApartmentCard key={offer.id} offer={offer} isNearByCard/>)}
+              {nearByOffersList.map((offer) => <ApartmentCard key={offer.id} offer={offer} isNearByCard/>)}
             </div>
           </section>
         </div>
