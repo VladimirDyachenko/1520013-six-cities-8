@@ -40,7 +40,7 @@ export const INITIAL_CITY_NAME = AvailableCity.Paris;
 export const offersSortOptions: IOfferSortOption[] = [
   {
     name: 'Popular',
-    sortFunction(a: Offer, b: Offer): number { return 0; },
+    sortFunction(_: Offer, __: Offer): number { return 0; },
   },
   {
     name: 'Price: low to high',
