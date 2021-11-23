@@ -69,7 +69,6 @@ export enum APIRoute {
 export const BACKEND_URL = 'https://8.react.pages.academy/six-cities';
 
 export enum HttpCode {
-  BadRequest = 400,
   Unauthorized = 401,
   NotFound = 404,
 }
