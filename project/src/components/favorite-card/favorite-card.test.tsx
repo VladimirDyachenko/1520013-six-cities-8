@@ -4,21 +4,21 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { AppRoute } from '../../utils/const';
 import { generateFakeOffer } from '../../utils/mocks';
-import { FavoritesCard } from './favorites-card';
+import { FavoriteCard } from './favorite-card';
 
 const history = createMemoryHistory();
 
-describe('Component: FavoritesCard', () => {
+describe('Component: FavoriteCard', () => {
   beforeEach(() => {
     history.push('test-page');
   });
 
-  it('should render FavoritesCard correctly', () => {
+  it('should render FavoriteCard correctly', () => {
     const fakeOffer = generateFakeOffer();
 
     render(
       <Router history={history}>
-        <FavoritesCard offer={fakeOffer} onToggleFavorite={jest.fn()}/>
+        <FavoriteCard offer={fakeOffer} onToggleFavorite={jest.fn()}/>
       </Router>,
     );
 
@@ -33,7 +33,7 @@ describe('Component: FavoritesCard', () => {
 
     render(
       <Router history={history}>
-        <FavoritesCard offer={fakeOffer} onToggleFavorite={jest.fn()}/>
+        <FavoriteCard offer={fakeOffer} onToggleFavorite={jest.fn()}/>
       </Router>,
     );
 
@@ -52,7 +52,7 @@ describe('Component: FavoritesCard', () => {
     const onToggleFavorite = jest.fn();
     render(
       <Router history={history}>
-        <FavoritesCard offer={fakeOffer} onToggleFavorite={onToggleFavorite}/>
+        <FavoriteCard offer={fakeOffer} onToggleFavorite={onToggleFavorite}/>
       </Router>,
     );
 

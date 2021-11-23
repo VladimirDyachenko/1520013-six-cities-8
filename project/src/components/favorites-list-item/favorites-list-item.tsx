@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import FavoritesCard from '../favorites-card/favorites-card';
+import FavoriteCard from '../favorite-card/favorite-card';
 
 type FavoritesListItemProps = {
   cityName: string;
@@ -17,7 +17,7 @@ function FavoritesListItem({cityName, offers}: FavoritesListItemProps): JSX.Elem
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((offer) => <FavoritesCard key={offer.id} offer={offer}/>)}
+        {offers.map((offer) => <FavoriteCard key={offer.id} offer={offer}/>)}
       </div>
     </li>
   );

@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import ApartmentCardsList from '../../apartment-cards-list/apartment-cards-list';
 import Header from '../../header/header';
 import Map from '../../map/map';
-import LocationsTabs from '../../locations-tabs/locations-tabs';
+import LocationTabs from '../../location-tabs/location-tabs';
 import SortForm from '../../sort-form/sort-form';
 import MainEmpty from '../../main-empty/main-empty';
 import { State } from '../../../types/store/state';
@@ -46,7 +46,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
         ? (
           <main className='page__main page__main--index'>
             <h1 className='visually-hidden'>Cities</h1>
-            <LocationsTabs/>
+            <LocationTabs/>
             <div className='cities'>
               <div className='cities__places-container container'>
                 <section className='cities__places places'>

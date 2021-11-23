@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { getSelectedCity } from '../../store/offers-list/selectors';
 import { State } from '../../types/store/state';
-import LocationsTabs from '../locations-tabs/locations-tabs';
+import LocationTabs from '../location-tabs/location-tabs';
 
 const mapStateToProps = (state: State) => ({
   selectedCity: getSelectedCity(state),
@@ -18,7 +18,7 @@ function MainEmpty(props: ConnectedComponentProps): JSX.Element {
   return (
     <main className="page__main page__main--index page__main--index-empty">
       <h1 className="visually-hidden">Cities</h1>
-      <LocationsTabs/>
+      <LocationTabs/>
       <div className="cities">
         <div className="cities__places-container cities__places-container--empty container">
           <section className="cities__no-places">

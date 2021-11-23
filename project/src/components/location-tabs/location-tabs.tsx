@@ -24,7 +24,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
-function LocationsTabs(props: ConnectedComponentProps): JSX.Element {
+function LocationTabs(props: ConnectedComponentProps): JSX.Element {
   const {selectedCity, onSetCity} = props;
 
   const activeLocationClassList = 'locations__item-link tabs__item tabs__item--active';
@@ -51,5 +51,5 @@ function LocationsTabs(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export { LocationsTabs };
-export default connector(LocationsTabs);
+export { LocationTabs };
+export default connector(LocationTabs);
