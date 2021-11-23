@@ -21,6 +21,11 @@ describe('Component: LocationsTabs', () => {
     );
 
     expect(screen.getByText(AvailableCity.Amsterdam)).toBeInTheDocument();
+    expect(screen.getByText(AvailableCity.Brussels)).toBeInTheDocument();
+    expect(screen.getByText(AvailableCity.Cologne)).toBeInTheDocument();
+    expect(screen.getByText(AvailableCity.Dusseldorf)).toBeInTheDocument();
+    expect(screen.getByText(AvailableCity.Hamburg)).toBeInTheDocument();
+    expect(screen.getByText(AvailableCity.Paris)).toBeInTheDocument();
     expect(screen.getAllByRole('link').length).toBe(cityNames.length);
   });
 
