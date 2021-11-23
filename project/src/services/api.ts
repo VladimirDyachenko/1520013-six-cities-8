@@ -8,7 +8,7 @@ const REQUEST_TIMEOUT = 5000;
 type UnauthorizedCallback = () => void;
 
 export const createAPI = (
-  onUnauthorize: UnauthorizedCallback,
+  onUnauthorized: UnauthorizedCallback,
   useToastInterceptor = true,
 ): AxiosInstance => {
   const api = axios.create({
@@ -22,7 +22,7 @@ export const createAPI = (
       const { response } = error;
 
       if (response?.status === HttpCode.Unauthorized) {
-        onUnauthorize();
+        onUnauthorized();
       }
 
       return Promise.reject(error);
