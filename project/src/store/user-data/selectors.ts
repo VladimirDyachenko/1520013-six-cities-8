@@ -1,3 +1,4 @@
+import { createSelector } from 'reselect';
 import { PrivateAuthInfo } from '../../types/auth-info';
 import { State } from '../../types/store/state';
 import { AuthorizationStatus } from '../../utils/const';
@@ -7,4 +8,7 @@ export const getUserData = (state: State): PrivateAuthInfo | undefined => state[
 
 export const getAuthorizationStatus = (state: State): AuthorizationStatus => state[NameSpace.User].authorizationStatus;
 
-export const getIsAuthorized = (state: State): boolean => state[NameSpace.User].authorizationStatus === AuthorizationStatus.Auth;
+export const getIsAuthorized = createSelector(
+  getAuthorizationStatus,
+  (authorizationStatus) => authorizationStatus === AuthorizationStatus.Auth,
+);
