@@ -6,6 +6,12 @@ import { ThunkAppDispatch } from '../../types/store/actions';
 import { AppRoute } from '../../utils/const';
 import { floorRating, getHumaneFriendlyOfferType } from '../../utils/function';
 
+type ApartmentCardProps = {
+  offer: Offer;
+  onSetActiveOfferId?: (id: number) => void;
+  isNearByCard?: boolean;
+}
+
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onToggleFavorite(offerId: number, isFavorite: boolean) {
     dispatch(toggleFavoriteStatusAction(offerId, isFavorite));
@@ -14,24 +20,18 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 
 const connector = connect(null, mapDispatchToProps);
 
-type ApartmentCardProps = {
-  offer: Offer;
-  onMouseEnter?: (id: number) => void;
-  isNearByCard?: boolean;
-}
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = ApartmentCardProps & PropsFromRedux;
 
-function ApartmentCard({ offer, onMouseEnter, isNearByCard, onToggleFavorite }: ConnectedComponentProps): JSX.Element {
+function ApartmentCard({ offer, onSetActiveOfferId, isNearByCard, onToggleFavorite }: ConnectedComponentProps): JSX.Element {
   const { id, isPremium, previewImage, price, isFavorite, rating, title, type } = offer;
   const favoriteButtonClassName = `place-card__bookmark-button button ${isFavorite ? 'place-card__bookmark-button--active' : ''}`;
   const articleClassName = isNearByCard ? 'near-places__card place-card' : 'cities__place-card place-card';
   const imageWrapperClassName = isNearByCard ? 'near-places__image-wrapper place-card__image-wrapper' : 'cities__image-wrapper place-card__image-wrapper';
 
   const handleMouseEnter = () => {
-    if (onMouseEnter !== undefined) {
-      onMouseEnter(id);
+    if (onSetActiveOfferId !== undefined) {
+      onSetActiveOfferId(id);
     }
   };
 

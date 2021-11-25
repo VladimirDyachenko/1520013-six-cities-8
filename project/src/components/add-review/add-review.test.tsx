@@ -5,7 +5,7 @@ import AddReview from './add-review';
 describe('Component: AddReview', () => {
   it('should render AddReview correctly', () => {
     const addCommentHandler = jest.fn();
-    render(<AddReview addCommentHandler={addCommentHandler}/>);
+    render(<AddReview onAddComment={addCommentHandler}/>);
 
     expect(screen.getByRole('button')).toHaveTextContent('Submit');
     expect(screen.getByPlaceholderText(/Tell how was your stay/i)).toBeInTheDocument();
@@ -15,7 +15,7 @@ describe('Component: AddReview', () => {
   it('submit button should be disabled becaus rating is not selected', () => {
     const addCommentHandler = jest.fn();
 
-    render(<AddReview addCommentHandler={addCommentHandler}/>);
+    render(<AddReview onAddComment={addCommentHandler}/>);
 
     expect(screen.getByTestId('submit-button')).toBeDisabled();
 
@@ -28,7 +28,7 @@ describe('Component: AddReview', () => {
     const addCommentHandler = jest.fn();
     const reviewText = ''.padEnd(49, 'c');
 
-    render(<AddReview addCommentHandler={addCommentHandler}/>);
+    render(<AddReview onAddComment={addCommentHandler}/>);
 
     userEvent.click(screen.getByTestId(`star-input-${1}`));
     expect(screen.getByTestId('submit-button')).toBeDisabled();
@@ -51,7 +51,7 @@ describe('Component: AddReview', () => {
     const addCommentHandler = jest.fn();
     const commentText = ''.padEnd(50, 'c');
 
-    render(<AddReview addCommentHandler={addCommentHandler}/>);
+    render(<AddReview onAddComment={addCommentHandler}/>);
 
     userEvent.click(screen.getByTestId(`star-input-${1}`));
     userEvent.type(screen.getByTestId('review-textarea'), commentText);

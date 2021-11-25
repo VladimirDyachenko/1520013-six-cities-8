@@ -3,10 +3,10 @@ import { CommentPost } from '../../types/api-request';
 import RatingStarInput from '../rating-star-input/rating-star-input';
 
 type AddReviewProps = {
-  addCommentHandler: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
+  onAddComment: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
 }
 
-function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
+function AddReview({onAddComment}: AddReviewProps): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState<number>();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -29,7 +29,7 @@ function AddReview({addCommentHandler}: AddReviewProps): JSX.Element {
     event.preventDefault();
 
     if(!isFormInvalid) {
-      addCommentHandler(
+      onAddComment(
         {
           comment: comment,
           rating: rating as number,

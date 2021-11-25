@@ -12,7 +12,7 @@ describe('Component: SortForm', () => {
       <SortForm
         sortOptions={sortOptions}
         selectedOption={selectedSortOption.name}
-        handleChange={jest.fn()}
+        onSetSorting={jest.fn()}
       />,
     );
 
@@ -27,7 +27,7 @@ describe('Component: SortForm', () => {
       <SortForm
         sortOptions={sortOptions}
         selectedOption={selectedSortOption.name}
-        handleChange={jest.fn()}
+        onSetSorting={jest.fn()}
       />,
     );
 
@@ -44,7 +44,7 @@ describe('Component: SortForm', () => {
       <SortForm
         sortOptions={sortOptions}
         selectedOption={selectedSortOption.name}
-        handleChange={handleChange}
+        onSetSorting={handleChange}
       />,
     );
 

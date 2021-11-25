@@ -26,7 +26,7 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
   const [password, setPassword] = useState('');
   const [isFormInvalid, setIsFormInvalid] = useState(true);
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
     onSubmit({ email, password });
   };
@@ -69,7 +69,7 @@ function LoginPage(props: PropsFromRedux): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form onSubmit={handleSubmit} className="login__form form" action="#" method="post">
+            <form onSubmit={handleFormSubmit} className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input

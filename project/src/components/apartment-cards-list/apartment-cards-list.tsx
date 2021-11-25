@@ -3,12 +3,12 @@ import ApartmentCard from '../apartment-card/apartment-card';
 
 type ApartmentCardsListProps = {
   offers: Offer[];
-  setActiveOfferId: (id: number) => void;
+  onSetActiveOfferId: (id: number) => void;
 };
 
 function ApartmentCardsList({
   offers,
-  setActiveOfferId,
+  onSetActiveOfferId,
 }: ApartmentCardsListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -16,7 +16,7 @@ function ApartmentCardsList({
         <ApartmentCard
           key={offer.id}
           offer={offer}
-          onMouseEnter={(id: number) => setActiveOfferId(id)}
+          onSetActiveOfferId={onSetActiveOfferId}
         />
       ))}
     </div>

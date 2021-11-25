@@ -3,15 +3,15 @@ import { useState } from 'react';
 type SortFormProps = {
   sortOptions: string[],
   selectedOption: string,
-  handleChange: (a: string) => void,
+  onSetSorting: (a: string) => void,
 }
 
-function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): JSX.Element {
+function SortForm({sortOptions, selectedOption, onSetSorting}: SortFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const openListClassName = isOpen ? 'places__options--opened' : '';
 
-  const onOptionClick = (selected: string) => {
-    handleChange(selected);
+  const handleOptionClick = (selected: string) => {
+    onSetSorting(selected);
     setIsOpen(false);
   };
 
@@ -36,7 +36,7 @@ function SortForm({sortOptions, selectedOption, handleChange}: SortFormProps): J
               key={option}
               className={`places__option ${option === selectedOption ? 'places__option--active' : ''}`}
               tabIndex={0}
-              onClick={() => onOptionClick(option)}
+              onClick={() => handleOptionClick(option)}
             >
               {option}
             </li>

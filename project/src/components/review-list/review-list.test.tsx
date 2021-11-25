@@ -13,7 +13,7 @@ describe('Component: ReviewList', () => {
       <ReviewList
         reviews={fakeReviews}
         isAuthorized={isAuthorized}
-        addCommentHandler={jest.fn()}
+        onAddComment={jest.fn()}
       />,
     );
 
@@ -30,7 +30,7 @@ describe('Component: ReviewList', () => {
       <ReviewList
         reviews={fakeReviews}
         isAuthorized={isAuthorized}
-        addCommentHandler={jest.fn()}
+        onAddComment={jest.fn()}
       />,
     );
 

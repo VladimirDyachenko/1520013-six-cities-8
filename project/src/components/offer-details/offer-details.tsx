@@ -11,11 +11,11 @@ type OfferDetailsProps = {
   comments: Comment[],
   nearOffers: Offer[],
   isAuthorized: boolean;
-  addCommentHandler: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
+  onAddComment: (comment: CommentPost, onSuccess: () => void, onError: () => void) => void;
   onToggleFavorite: (id: number, isFavorite: boolean) => void;
 }
 
-function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHandler, onToggleFavorite }: OfferDetailsProps): JSX.Element {
+function OfferDetails({offer, comments, nearOffers, isAuthorized, onAddComment, onToggleFavorite }: OfferDetailsProps): JSX.Element {
   const favoriteClassName = offer.isFavorite ? 'property__bookmark-button--active' : '';
   const [images, setImages] = useState<Array<string>>([]);
   const [offersToDrawOnMap, setOffersToDrawOnMap] = useState<Offer[]>([]);
@@ -111,7 +111,7 @@ function OfferDetails({offer, comments, nearOffers, isAuthorized, addCommentHand
               </p>
             </div>
           </div>
-          <ReviewList reviews={comments} isAuthorized={isAuthorized} addCommentHandler={addCommentHandler}/>
+          <ReviewList reviews={comments} isAuthorized={isAuthorized} onAddComment={onAddComment}/>
         </div>
       </div>
       <Map

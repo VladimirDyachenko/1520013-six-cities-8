@@ -26,7 +26,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized={false}
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={jest.fn()}
           />
         </Router>
@@ -49,7 +49,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={jest.fn()}
           />
         </Router>
@@ -74,7 +74,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={jest.fn()}
           />
         </Router>
@@ -96,7 +96,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={jest.fn()}
           />
         </Router>
@@ -118,7 +118,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={onToggleFavorite}
           />
         </Router>
@@ -141,7 +141,7 @@ describe('Component: OfferDetails', () => {
             comments={[]}
             nearOffers={[]}
             isAuthorized
-            addCommentHandler={jest.fn()}
+            onAddComment={jest.fn()}
             onToggleFavorite={jest.fn()}
           />
         </Router>

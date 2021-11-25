@@ -25,7 +25,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function Header(props: PropsFromRedux): JSX.Element {
   const { isAuthorized, userData, onLogOut } = props;
 
-  const handleLogOut = (event: MouseEvent) => {
+  const handleLogOutClick = (event: MouseEvent) => {
     event.preventDefault();
     onLogOut();
   };
@@ -47,7 +47,7 @@ function Header(props: PropsFromRedux): JSX.Element {
           className='header__nav-link'
           href='#temp'
           data-testid="sign-out-link"
-          onClick={handleLogOut}
+          onClick={handleLogOutClick}
         >
           <span className='header__signout'>Sign out</span>
         </a>

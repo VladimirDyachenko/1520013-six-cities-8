@@ -62,7 +62,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
   } = props;
   const params = useParams<RouterParams>();
 
-  const addCommentHandler = useCallback((comment: CommentPost, onSuccess, onError) => {
+  const onAddComment = useCallback((comment: CommentPost, onSuccess, onError) => {
     addPropertyComment(Number(params.id), comment, onSuccess, onError);
   }, [params.id, addPropertyComment]);
 
@@ -82,7 +82,7 @@ function PropertyPage(props: ConnectedComponentProps): JSX.Element {
             comments={propertyComments}
             nearOffers={nearByOffersList}
             isAuthorized={isAuthorized}
-            addCommentHandler={addCommentHandler}
+            onAddComment={onAddComment}
             onToggleFavorite={onToggleFavorite}
           />
         ) : <LoadingScreen/>}

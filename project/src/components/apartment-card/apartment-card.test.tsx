@@ -85,13 +85,13 @@ describe('Component: ApartmentCard', () => {
     expect(onToggleFavorite).toBeCalledWith(fakeOffer.id, !fakeOffer.isFavorite);
   });
 
-  it('should call onMouseEnter callback', () => {
+  it('should call onSetActiveOfferId callback', () => {
     const fakeOffer = generateFakeOffer();
     const onMouseEnter = jest.fn();
 
     render(
       <Router history={history}>
-        <ApartmentCard offer={fakeOffer} onToggleFavorite={jest.fn()} onMouseEnter={onMouseEnter}/>
+        <ApartmentCard offer={fakeOffer} onToggleFavorite={jest.fn()} onSetActiveOfferId={onMouseEnter}/>
       </Router>,
     );
 

@@ -21,7 +21,7 @@ describe('Component: ApartmentCardList', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <ApartmentCardsList offers={fakeOffer} setActiveOfferId={jest.fn()}/>
+          <ApartmentCardsList offers={fakeOffer} onSetActiveOfferId={jest.fn()}/>
         </Router>
       </Provider>,
     );

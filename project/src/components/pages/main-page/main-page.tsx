@@ -35,7 +35,7 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
   const { offers, cityName, selectedSort, setSelectedSort } = props;
   const [activeOfferId, setActiveOfferId] = useState<number>();
 
-  const handleSortingChange = (sortOptionName: string) => {
+  const onSortingChange = (sortOptionName: string) => {
     setSelectedSort(sortOptionName as OfferSortOptionName);
   };
 
@@ -55,9 +55,9 @@ function MainPage(props: ConnectedComponentProps): JSX.Element {
                   <SortForm
                     sortOptions={offersSortOptions.map((option) => option.name)}
                     selectedOption={selectedSort}
-                    handleChange={handleSortingChange}
+                    onSetSorting={onSortingChange}
                   />
-                  <ApartmentCardsList offers={offers} setActiveOfferId={setActiveOfferId}/>
+                  <ApartmentCardsList offers={offers} onSetActiveOfferId={setActiveOfferId}/>
                 </section>
                 <div className='cities__right-section'>
                   <Map
