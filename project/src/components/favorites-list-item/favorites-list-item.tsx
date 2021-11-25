@@ -1,19 +1,26 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import FavoriteCard from '../favorite-card/favorite-card';
 
 type FavoritesListItemProps = {
   cityName: string;
-  offers: Offer[]
+  offers: Offer[];
+  onSetCity: (city: string) => void;
 };
 
-function FavoritesListItem({cityName, offers}: FavoritesListItemProps): JSX.Element {
+function FavoritesListItem({cityName, offers, onSetCity}: FavoritesListItemProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#temp">
+          <Link
+            to={`/#${cityName}`}
+            className="locations__item-link"
+            onClick={() => onSetCity(cityName)}
+            data-testid="link-to-main-page"
+          >
             <span>{cityName}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">

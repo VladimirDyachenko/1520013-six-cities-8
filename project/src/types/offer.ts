@@ -36,3 +36,8 @@ export interface IOfferSortOption {
   name: OfferSortOptionName;
   sortFunction: (a: Offer, b: Offer) => number;
 }
+
+type CityName = string;
+
+// Для наглядности использован type alias CityName
+export type FavoriteOffersInCity = [CityName, Offer[]];

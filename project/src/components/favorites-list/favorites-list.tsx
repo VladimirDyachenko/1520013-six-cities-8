@@ -1,16 +1,14 @@
-import { Offer } from '../../types/offer';
+import { FavoriteOffersInCity } from '../../types/offer';
 import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 
 type FavoritesListProps = {
-  offers: Offer[];
+  favoriteOffersByCity: FavoriteOffersInCity[];
+  onSetCity: (city: string) => void;
 };
 
-type FavoritesOfferByCity = {[city: string]: Offer[]};
+function FavoritesList({favoriteOffersByCity, onSetCity}: FavoritesListProps): JSX.Element {
 
-function FavoritesList({offers}: FavoritesListProps): JSX.Element {
-  const favoriteOffersByCity: FavoritesOfferByCity = {};
-
-  if (offers.length === 0) {
+  if (favoriteOffersByCity.length === 0) {
     return (
       <main className='page__main page__main--favorites page__main--favorites-empty'>
         <div className='page__favorites-container container'>
@@ -26,23 +24,13 @@ function FavoritesList({offers}: FavoritesListProps): JSX.Element {
     );
   }
 
-  offers.forEach((offer) => {
-    if (offer.isFavorite) {
-      if (favoriteOffersByCity[offer.city.name]) {
-        favoriteOffersByCity[offer.city.name].push(offer);
-      } else {
-        favoriteOffersByCity[offer.city.name] = [offer];
-      }
-    }
-  });
-
   return (
     <main className='page__main page__main--favorites'>
       <div className='page__favorites-container container'>
         <section className='favorites'>
           <h1 className='favorites__title' data-testid='favorites-not-empty'>Saved listing</h1>
           <ul className='favorites__list'>
-            {Object.entries(favoriteOffersByCity).map((city) => <FavoritesListItem key={city[0]} cityName={city[0]} offers={city[1]}/>)}
+            {favoriteOffersByCity.map((city) => <FavoritesListItem key={city[0]} cityName={city[0]} offers={city[1]} onSetCity={onSetCity}/>)}
           </ul>
         </section>
       </div>

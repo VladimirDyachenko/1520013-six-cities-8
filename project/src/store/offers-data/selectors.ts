@@ -29,3 +29,20 @@ export const getNearByOffers = (state: State): Offer[] => state[NameSpace.Data].
 export const getOfferDetails = (state: State): Offer | undefined => state[NameSpace.Data].offerDetails;
 
 export const getFavoriteOffers = (state: State): Offer[] => state[NameSpace.Data].favoriteOffers;
+
+export const getFavoriteOffersByCity = createSelector(
+  getFavoriteOffers,
+  (offers) => {
+    const favoriteOffersByCity: {[city: string]: Offer[]} = {};
+
+    offers.forEach((offer) => {
+      if (favoriteOffersByCity[offer.city.name]) {
+        favoriteOffersByCity[offer.city.name].push(offer);
+      } else {
+        favoriteOffersByCity[offer.city.name] = [offer];
+      }
+    });
+
+    return Object.entries(favoriteOffersByCity);
+  },
+);

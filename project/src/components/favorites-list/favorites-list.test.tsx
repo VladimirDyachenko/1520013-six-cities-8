@@ -6,7 +6,7 @@ import FavoritesList from './favorites-list';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { Provider } from 'react-redux';
 import { datatype } from 'faker';
-import { Offer } from '../../types/offer';
+import { FavoriteOffersInCity, Offer } from '../../types/offer';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();
@@ -18,12 +18,12 @@ describe('Component: FavoritesList', () => {
   });
 
   it('should render empty FavoritesList correctly', () => {
-    const fakeOffer: Offer[] = [];
+    const fakeOffer: FavoriteOffersInCity[] = [];
 
     render(
       <Provider store={store}>
         <Router history={history}>
-          <FavoritesList offers={fakeOffer}/>
+          <FavoritesList favoriteOffersByCity={fakeOffer} onSetCity={jest.fn()}/>
         </Router>
       </Provider>,
     );
@@ -33,17 +33,18 @@ describe('Component: FavoritesList', () => {
   });
 
   it('should render FavoritesList with offers correctly', () => {
-    const fakeOffer = new Array(datatype.number({min: 1, max: 10})).fill(null).map(() => generateFakeOffer(undefined, true));
+    const fakeOffers = new Array(datatype.number({min: 1, max: 10})).fill(null).map(() => generateFakeOffer(undefined, true));
+    const fakeOffersInCity: Array<[string, Offer[]]> = [['City', fakeOffers]];
 
     render(
       <Provider store={store}>
         <Router history={history}>
-          <FavoritesList offers={fakeOffer}/>
+          <FavoritesList favoriteOffersByCity={fakeOffersInCity} onSetCity={jest.fn()}/>
         </Router>
       </Provider>,
     );
 
     expect(screen.queryByTestId('favorites-empty')).not.toBeInTheDocument();
-    expect(screen.getAllByRole('article').length).toBe(fakeOffer.length);
+    expect(screen.getAllByRole('article').length).toBe(fakeOffers.length);
   });
 });
