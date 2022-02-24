@@ -8,11 +8,11 @@ export type HotelRes = {
   'host': PublicAuthInfoRes;
   'id': number;
   'images': string[];
-  'is_favorite': boolean;
-  'is_premium': boolean;
+  'isFavorite': boolean;
+  'isPremium': boolean;
   'location': GeoLocationRes;
-  'max_adults': number;
-  'preview_image': string;
+  'maxAdults': number;
+  'previewImage': string;
   'price': number;
   'rating': number;
   'title': string;
@@ -20,9 +20,9 @@ export type HotelRes = {
 };
 
 export type PublicAuthInfoRes = {
-  'avatar_url': string;
+  'avatarUrl': string;
   'id': number;
-  'is_pro': boolean;
+  'isPro': boolean;
   'name': string;
 };
 
@@ -51,9 +51,9 @@ export type UserLogin = {
 };
 
 export type AuthInfoRes = {
-  'avatar_url': string;
+  'avatarUrl': string;
   'id': number;
-  'is_pro': boolean;
+  'isPro': boolean;
   'name': string;
   'email': string;
   'token': string;

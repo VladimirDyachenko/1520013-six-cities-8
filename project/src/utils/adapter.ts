@@ -19,21 +19,21 @@ export class APIAdapter {
       goods: [...hotel.goods],
       host: {
         id: hotel.host.id,
-        avatarUrl: hotel.host.avatar_url,
-        isPro: hotel.host.is_pro,
+        avatarUrl: hotel.host.avatarUrl,
+        isPro: hotel.host.isPro,
         name: hotel.host.name,
       },
       id: hotel.id,
       images: [...hotel.images],
-      isFavorite: hotel.is_favorite,
-      isPremium: hotel.is_premium,
+      isFavorite: hotel.isFavorite,
+      isPremium: hotel.isPremium,
       location: {
         latitude: hotel.location.latitude,
         longitude: hotel.location.longitude,
         zoom: hotel.location.zoom,
       },
-      maxAdults: hotel.max_adults,
-      previewImage: hotel.preview_image,
+      maxAdults: hotel.maxAdults,
+      previewImage: hotel.previewImage,
       price: hotel.price,
       rating: hotel.rating,
       title: hotel.title,
@@ -43,9 +43,9 @@ export class APIAdapter {
 
   static authInfoToClient(authInfo: AuthInfoRes): PrivateAuthInfo {
     return {
-      avatarUrl: authInfo.avatar_url,
+      avatarUrl: authInfo.avatarUrl,
       id: authInfo.id,
-      isPro: authInfo.is_pro,
+      isPro: authInfo.isPro,
       name: authInfo.name,
       email: authInfo.email,
       token: authInfo.token,
@@ -59,9 +59,9 @@ export class APIAdapter {
       id: comment.id,
       rating: comment.rating,
       user: {
-        avatarUrl: comment.user.avatar_url,
+        avatarUrl: comment.user.avatarUrl,
         id: comment.user.id,
-        isPro: comment.user.is_pro,
+        isPro: comment.user.isPro,
         name: comment.user.name,
       },
     };

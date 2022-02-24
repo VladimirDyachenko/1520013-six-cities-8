@@ -66,7 +66,7 @@ export enum APIRoute {
   Favorite = '/favorite',
 }
 
-export const BACKEND_URL = 'https://8.react.pages.academy/six-cities';
+export const BACKEND_URL = 'https://9.react.pages.academy/six-cities';
 
 export enum HttpCode {
   Unauthorized = 401,
